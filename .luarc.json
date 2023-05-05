@@ -1,0 +1,21 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "Lua 5.1",
+  "workspace.library": [
+    "C:/Users/admin/.vscode/extensions/ketho.wow-api-0.22.3/Annotations"
+  ],
+  "workspace.ignoreDir": [
+    "src/libraries",
+    "src/locales",
+    "assets",
+    "docs"
+  ],
+  "diagnostics.globals": [
+    "ANDROMEDA_ADB",
+    "ANDROMEDA_PDB",
+    "ANDROMEDA_CDB"
+  ],
+  "diagnostics.disable": [
+    "lowercase-global"
+  ]
+}
