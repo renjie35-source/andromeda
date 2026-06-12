@@ -57,8 +57,9 @@ do
 
         local maxStack = select(8, C_Item.GetItemInfo(itemLink))
         if maxStack and maxStack > 1 then
-            local numAvailable = select(5, GetMerchantItemInfo(id))
-            if numAvailable > -1 then
+            local info = C_MerchantFrame.GetItemInfo(id)
+            local numAvailable = info and info.numAvailable
+            if numAvailable and numAvailable > -1 then
                 BuyMerchantItem(id, numAvailable)
             else
                 BuyMerchantItem(id, GetMerchantItemMaxStack(id))

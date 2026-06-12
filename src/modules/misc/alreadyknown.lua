@@ -99,10 +99,10 @@ local function Hook_UpdateMerchantInfo()
 
         local button = _G['MerchantItem' .. i .. 'ItemButton']
         if button and button:IsShown() then
-            local _, _, _, _, numAvailable, isUsable = GetMerchantItemInfo(index)
-            if isUsable and IsAlreadyKnown(GetMerchantItemLink(index)) then
+            local info = C_MerchantFrame.GetItemInfo(index)
+            if info and info.isUsable and IsAlreadyKnown(GetMerchantItemLink(index)) then
                 local r, g, b = COLOR.r, COLOR.g, COLOR.b
-                if numAvailable == 0 then
+                if info.numAvailable == 0 then
                     r, g, b = r * 0.5, g * 0.5, b * 0.5
                 end
                 _G.SetItemButtonTextureVertexColor(button, r, g, b)
