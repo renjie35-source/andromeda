@@ -85,7 +85,6 @@ function BLIZZARD:TradeTabs_Reskin()
 
     for _, tab in pairs(tabList) do
         tab:SetCheckedTexture(C.Assets.Textures.ButtonChecked)
-        tab:GetRegions():Hide()
         F.CreateBDFrame(tab)
         local texture = tab:GetNormalTexture()
         if texture then
@@ -108,7 +107,11 @@ function BLIZZARD:TradeTabs_Create(spellID, toyID, itemID)
         return
     end -- precaution
 
-    local tab = CreateFrame('CheckButton', nil, _G.ProfessionsFrame, 'SpellBookSkillLineTabTemplate, SecureActionButtonTemplate')
+    -- SpellBookSkillLineTabTemplate was removed in patch 11.0; build the
+    -- button from a bare secure CheckButton and create its textures manually.
+    local tab = CreateFrame('CheckButton', nil, _G.ProfessionsFrame, 'SecureActionButtonTemplate')
+    tab:SetSize(32, 32)
+    tab:SetHighlightTexture(C.Assets.Textures.Backdrop)
     tab.tooltip = name
     tab.spellID = spellID
     tab.itemID = toyID or itemID
