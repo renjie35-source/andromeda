@@ -28,7 +28,6 @@ function BLIZZARD:OnLogin()
     -- BLIZZARD:EnhancedFriendsList()
     BLIZZARD:EnhancedPremade()
     BLIZZARD:EnhancedDressup()
-    BLIZZARD:ClickBindingTab()
 end
 
 function BLIZZARD:UpdateBossBanner()
@@ -106,46 +105,6 @@ function BLIZZARD:UIWidgetFrameMover()
         if parent ~= frame2 then
             self:ClearAllPoints()
             self:SetPoint('CENTER', frame2)
-        end
-    end)
-end
-
--- Add ClickBinding tab to the spell book
--- Note: the legacy SpellBookFrame side-tab system was removed in patch 11.0
--- when the spell book moved into PlayerSpellsFrame. Guard the legacy globals
--- so login does not error; the tab is only created when they are present.
-function BLIZZARD:ClickBindingTab()
-    local sideTabs = _G.SpellBookSideTabsFrame
-    if not sideTabs or not C_SpellBook.GetNumSpellBookSkillLines then
-        return
-    end
-
-    local cb = CreateFrame('CheckButton', C.ADDON_TITLE .. 'ClickCastingTab', sideTabs, 'SpellBookSkillLineTabTemplate')
-    cb:SetNormalTexture('Interface\\Icons\\trade_engineering')
-    cb:Show()
-    cb.tooltip = L['Click Binding']
-
-    F.ReskinTab(cb)
-
-    cb:SetScript('OnShow', function()
-        local num = C_SpellBook.GetNumSpellBookSkillLines()
-        local lastTab = _G['SpellBookSkillLineTab' .. num]
-        if not lastTab then
-            return
-        end
-
-        cb:ClearAllPoints()
-        cb:SetPoint('TOPLEFT', lastTab, 'BOTTOMLEFT', 0, -30)
-
-        cb:SetChecked(InClickBindingMode())
-        cb:SetCheckedTexture(C.Assets.Textures.ButtonChecked)
-    end)
-
-    cb:SetScript('OnClick', function()
-        if InClickBindingMode() then
-            _G.ClickBindingFrame.SaveButton:Click()
-        else
-            ToggleClickBindingFrame()
         end
     end)
 end

@@ -155,7 +155,6 @@ L["Classify Indicator"] = true
 L["Clean up chat messages from damage meter addons like Details and instead provides a clickable chat link to provide the blocked statistics in a popup."] = true
 L["Clear: Class Color"] = true
 L["Clear: Gradient"] = true
-L["Click Binding"] = true
 L["Click the gear icon to setup auras white list, up to 3 icons."] = true
 L["Click to tag item as junk.|nIf 'Auto sell junk' enabled, these items would be sold as well.|nThe list is saved account-wide, and won't be in the export data.|nYou can hold CTRL + ALT and click to wipe the custom junk list."] = true
 L["Clickable Size"] = true

@@ -155,7 +155,6 @@ L["Classify Indicator"] = "类型指示器"
 L["Clean up chat messages from damage meter addons like Details and instead provides a clickable chat link to provide the blocked statistics in a popup."] = "伤害统计类插件发送的多行信息将会精简为一个可点击的链接，点击后会出现一个窗口显示详细信息。"
 L["Clear: Class Color"] = true
 L["Clear: Gradient"] = true
-L["Click Binding"] = true
 L["Click the gear icon to setup auras white list, up to 3 icons."] = true
 L["Click to tag item as junk.|nIf 'Auto sell junk' enabled, these items would be sold as well.|nThe list is saved account-wide, and won't be in the export data.|nYou can hold CTRL + ALT and click to wipe the custom junk list."] = "点击物品标记为垃圾。|n如果'自动出售垃圾物品'功能已启用，这些被标记为垃圾的物品也会被自动出售。|n这个列表是账号共享的，你也可以按住CTRL+ALT键点击这个按钮来清空列表。"
 L["Clickable Size"] = "可点击尺寸"

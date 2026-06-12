@@ -155,7 +155,6 @@ L["Classify Indicator"] = "Классифицировать индикатор"
 L["Clean up chat messages from damage meter addons like Details and instead provides a clickable chat link to provide the blocked statistics in a popup."] = "Убрать сообщения в чате от аддонов, измеряющих урон, таких как Details, и вместо этого предоставить кликабельную ссылку на чат для предоставления заблокированной статистики во всплывающем окне."
 L["Clear: Class Color"] = true
 L["Clear: Gradient"] = true
-L["Click Binding"] = true
 L["Click the gear icon to setup auras white list, up to 3 icons."] = true
 L["Click to tag item as junk.|nIf 'Auto sell junk' enabled, these items would be sold as well.|nThe list is saved account-wide, and won't be in the export data.|nYou can hold CTRL + ALT and click to wipe the custom junk list."] = "Нажмите, чтобы пометить товар как нежелательный.|nЕсли включена функция 'Автоматическая продажа нежелательного товара', эти товары также будут проданы.|nСписок сохраняется в рамках всего аккаунта и не попадает в данные экспорта.|nВы можете удерживать CTRL + ALT и нажать, чтобы стереть пользовательский список нежелательного товара."
 L["Clickable Size"] = "Кликабельный размер"
