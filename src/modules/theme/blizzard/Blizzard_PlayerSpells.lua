@@ -39,19 +39,27 @@ local function reskinSpellBookItem(frame)
     frame.styled = true
 end
 
-C.Themes['Blizzard_PlayerSpells'] = function()
-    local PlayerSpellsFrame = _G.PlayerSpellsFrame
-    if not PlayerSpellsFrame then
-        return
+local function reskinTalentFrameDialog(dialog)
+    F.StripTextures(dialog)
+    F.SetBD(dialog)
+    if dialog.AcceptButton then
+        F.ReskinButton(dialog.AcceptButton)
+    end
+    if dialog.CancelButton then
+        F.ReskinButton(dialog.CancelButton)
+    end
+    if dialog.DeleteButton then
+        F.ReskinButton(dialog.DeleteButton)
     end
 
-    F.ReskinPortraitFrame(PlayerSpellsFrame)
-
-    local spellBook = PlayerSpellsFrame.SpellBookFrame
-    if not spellBook then
-        return
+    if dialog.NameControl and dialog.NameControl.EditBox then
+        F.ReskinEditbox(dialog.NameControl.EditBox)
+        dialog.NameControl.EditBox.__bg:SetPoint('TOPLEFT', -5, -10)
+        dialog.NameControl.EditBox.__bg:SetPoint('BOTTOMRIGHT', 5, 10)
     end
+end
 
+local function reskinSpellBook(spellBook)
     local pagedSpells = spellBook.PagedSpellsFrame
     if pagedSpells then
         hooksecurefunc(pagedSpells, 'DisplayViewsForCurrentPage', function(self)
@@ -76,6 +84,129 @@ C.Themes['Blizzard_PlayerSpells'] = function()
 
                 tab.styled = true
             end
+        end
+    end
+end
+
+local function reskinTalents(talents)
+    if talents.Background then
+        talents.Background:SetAlpha(0.4)
+    end
+    if talents.BlackBG then
+        talents.BlackBG:SetAlpha(0)
+    end
+    if talents.BottomBar then
+        talents.BottomBar:SetAlpha(0)
+    end
+
+    if talents.ApplyButton then
+        F.ReskinButton(talents.ApplyButton)
+    end
+    if talents.InspectCopyButton then
+        F.ReskinButton(talents.InspectCopyButton)
+    end
+    if talents.LoadSystem and talents.LoadSystem.Dropdown then
+        F.ReskinDropdown(talents.LoadSystem.Dropdown)
+    end
+    if talents.SearchBox then
+        F.ReskinEditbox(talents.SearchBox)
+        talents.SearchBox.__bg:SetPoint('TOPLEFT', -4, -5)
+        talents.SearchBox.__bg:SetPoint('BOTTOMRIGHT', 0, 5)
+    end
+end
+
+local function reskinSpec(spec)
+    hooksecurefunc(spec, 'UpdateSpecFrame', function(self)
+        if not self.SpecContentFramePool then
+            return
+        end
+
+        for specContentFrame in self.SpecContentFramePool:EnumerateActive() do
+            if not specContentFrame.styled then
+                if specContentFrame.ActivateButton then
+                    F.ReskinButton(specContentFrame.ActivateButton)
+                end
+
+                local role = GetSpecializationRole(specContentFrame.specIndex)
+                if role and specContentFrame.RoleIcon then
+                    F.ReskinSmallRole(specContentFrame.RoleIcon, role)
+                end
+
+                if specContentFrame.SpellButtonPool then
+                    for button in specContentFrame.SpellButtonPool:EnumerateActive() do
+                        if button.Ring then
+                            button.Ring:Hide()
+                        end
+                        if button.Icon then
+                            F.ReskinIcon(button.Icon)
+                        end
+                    end
+                end
+
+                specContentFrame.styled = true
+            end
+        end
+    end)
+end
+
+C.Themes['Blizzard_PlayerSpells'] = function()
+    local PlayerSpellsFrame = _G.PlayerSpellsFrame
+    if not PlayerSpellsFrame then
+        return
+    end
+
+    F.ReskinPortraitFrame(PlayerSpellsFrame)
+
+    if PlayerSpellsFrame.TabSystem and PlayerSpellsFrame.TabSystem.GetChildren then
+        for _, tab in pairs({ PlayerSpellsFrame.TabSystem:GetChildren() }) do
+            if tab.GetName then
+                F.ReskinTab(tab)
+            end
+        end
+    end
+
+    if PlayerSpellsFrame.SpellBookFrame then
+        reskinSpellBook(PlayerSpellsFrame.SpellBookFrame)
+    end
+
+    if PlayerSpellsFrame.TalentsFrame then
+        reskinTalents(PlayerSpellsFrame.TalentsFrame)
+    end
+
+    if PlayerSpellsFrame.SpecFrame then
+        reskinSpec(PlayerSpellsFrame.SpecFrame)
+    end
+
+    local importDialog = _G.ClassTalentLoadoutImportDialog
+    if importDialog then
+        reskinTalentFrameDialog(importDialog)
+
+        if importDialog.ImportControl and importDialog.ImportControl.InputContainer then
+            F.StripTextures(importDialog.ImportControl.InputContainer)
+            F.CreateBDFrame(importDialog.ImportControl.InputContainer, 0.25)
+        end
+    end
+
+    local createDialog = _G.ClassTalentLoadoutCreateDialog
+    if createDialog then
+        reskinTalentFrameDialog(createDialog)
+    end
+
+    local editDialog = _G.ClassTalentLoadoutEditDialog
+    if editDialog then
+        reskinTalentFrameDialog(editDialog)
+
+        local editbox = editDialog.LoadoutName
+        if editbox then
+            F.ReskinEditbox(editbox)
+            editbox.__bg:SetPoint('TOPLEFT', -5, -5)
+            editbox.__bg:SetPoint('BOTTOMRIGHT', 5, 5)
+        end
+
+        local check = editDialog.UsesSharedActionBars
+        if check and check.CheckButton then
+            F.ReskinCheckbox(check.CheckButton)
+            check.CheckButton.bg:SetInside(nil, 6, 6)
         end
     end
 end
