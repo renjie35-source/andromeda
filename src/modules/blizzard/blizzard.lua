@@ -110,9 +110,17 @@ function BLIZZARD:UIWidgetFrameMover()
     end)
 end
 
--- Add ClickBinding tab to SpellBookFrame
+-- Add ClickBinding tab to the spell book
+-- Note: the legacy SpellBookFrame side-tab system was removed in patch 11.0
+-- when the spell book moved into PlayerSpellsFrame. Guard the legacy globals
+-- so login does not error; the tab is only created when they are present.
 function BLIZZARD:ClickBindingTab()
-    local cb = CreateFrame('CheckButton', C.ADDON_TITLE .. 'ClickCastingTab', _G.SpellBookSideTabsFrame, 'SpellBookSkillLineTabTemplate')
+    local sideTabs = _G.SpellBookSideTabsFrame
+    if not sideTabs or not C_SpellBook.GetNumSpellBookSkillLines then
+        return
+    end
+
+    local cb = CreateFrame('CheckButton', C.ADDON_TITLE .. 'ClickCastingTab', sideTabs, 'SpellBookSkillLineTabTemplate')
     cb:SetNormalTexture('Interface\\Icons\\trade_engineering')
     cb:Show()
     cb.tooltip = L['Click Binding']
@@ -120,8 +128,11 @@ function BLIZZARD:ClickBindingTab()
     F.ReskinTab(cb)
 
     cb:SetScript('OnShow', function()
-        local num = GetNumSpellTabs()
+        local num = C_SpellBook.GetNumSpellBookSkillLines()
         local lastTab = _G['SpellBookSkillLineTab' .. num]
+        if not lastTab then
+            return
+        end
 
         cb:ClearAllPoints()
         cb:SetPoint('TOPLEFT', lastTab, 'BOTTOMLEFT', 0, -30)

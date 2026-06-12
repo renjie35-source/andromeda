@@ -100,9 +100,34 @@ function ACTIONBAR:Bind_Create()
         ACTIONBAR:Bind_RegisterButton(button)
     end
 
-    for i = 1, 12 do
-        local button = _G['SpellButton' .. i]
-        button:HookScript('OnEnter', hookSpellButton)
+    -- SpellBook was reworked into PlayerSpellsFrame (patch 11.0), spell buttons
+    -- are now pooled and only exist after Blizzard_PlayerSpells is loaded
+    local function registerSpellButtons()
+        local spellBook = _G.PlayerSpellsFrame and _G.PlayerSpellsFrame.SpellBookFrame
+        local pagedSpells = spellBook and spellBook.PagedSpellsFrame
+        if not pagedSpells then
+            return
+        end
+
+        hooksecurefunc(pagedSpells, 'DisplayViewsForCurrentPage', function(self)
+            for _, item in self:EnumerateFrames() do
+                if item.Button and not item.Button.__keybindHooked then
+                    item.Button:HookScript('OnEnter', hookSpellButton)
+                    item.Button.__keybindHooked = true
+                end
+            end
+        end)
+    end
+
+    if C_AddOns.IsAddOnLoaded('Blizzard_PlayerSpells') then
+        registerSpellButtons()
+    else
+        F:RegisterEvent('ADDON_LOADED', function(_, name)
+            if name == 'Blizzard_PlayerSpells' then
+                registerSpellButtons()
+                return true
+            end
+        end)
     end
 
     if not C_AddOns.IsAddOnLoaded('Blizzard_MacroUI') then
@@ -127,9 +152,11 @@ function ACTIONBAR:Bind_Update(button, spellmacro)
     frame:Show()
 
     if spellmacro == 'SPELL' then
-        frame.id = SpellBook_GetSpellBookSlot(button)
-        frame.name = GetSpellBookItemName(frame.id, _G.SpellBookFrame.bookType)
-        frame.bindings = { GetBindingKey(spellmacro .. ' ' .. frame.name) }
+        local item = button:GetParent()
+        local info = item and item.spellBookItemInfo
+        frame.name = info and info.name
+        frame.id = info and info.actionID
+        frame.bindings = frame.name and { GetBindingKey(spellmacro .. ' ' .. frame.name) } or {}
     elseif spellmacro == 'MACRO' then
         frame.id = button.selectionIndex or button:GetID()
         if _G.MacroFrame.selectedTab == 2 then

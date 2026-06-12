@@ -13,7 +13,9 @@ MAP.MenuList = {
         text = _G.SPELLBOOK_ABILITIES_BUTTON,
         notCheckable = true,
         func = function()
-            ToggleFrame(_G.SpellBookFrame)
+            if PlayerSpellsUtil and PlayerSpellsUtil.TogglePlayerSpellsFrame then
+                PlayerSpellsUtil.TogglePlayerSpellsFrame(PlayerSpellsUtil.FrameTabs.SpellBook)
+            end
         end,
     },
     {

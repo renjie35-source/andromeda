@@ -1843,6 +1843,7 @@ globals = {
     'PlayerEffectiveAttackPower',
     'PlayerHasHearthstone',
     'PlayerHasToy',
+    'PlayerSpellsUtil',
     'PlayerIsPVPInactive',
     'PlayerVehicleHasComboPoints',
     'PortGraveyard',

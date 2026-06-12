@@ -15,7 +15,9 @@ local menuList = {
         _G.SPELLBOOK_ABILITIES_BUTTON,
         C.Assets.Textures.MenuBarSpellbook,
         function()
-            securecall(_G.ToggleFrame, _G.SpellBookFrame)
+            if PlayerSpellsUtil and PlayerSpellsUtil.TogglePlayerSpellsFrame then
+                securecall(PlayerSpellsUtil.TogglePlayerSpellsFrame, PlayerSpellsUtil.FrameTabs.SpellBook)
+            end
         end,
     },
     {
