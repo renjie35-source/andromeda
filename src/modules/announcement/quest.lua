@@ -76,7 +76,7 @@ function ANNOUNCEMENT:FindQuestAccept(questID)
     WQcache[questID] = true
 
     local tagInfo = C_QuestLog.GetQuestTagInfo(questID)
-    if tagInfo and tagInfo.worldQuestType == _G.LE_QUEST_TAG_TYPE_PROFESSION then
+    if tagInfo and tagInfo.worldQuestType == Enum.QuestTagType.Profession then
         return
     end
 
@@ -84,7 +84,7 @@ function ANNOUNCEMENT:FindQuestAccept(questID)
     if questLogIndex then
         local info = C_QuestLog.GetInfo(questLogIndex)
         if info then
-            sendQuestMsg(acceptText(questID, info.frequency == _G.LE_QUEST_FREQUENCY_DAILY))
+            sendQuestMsg(acceptText(questID, info.frequency == Enum.QuestFrequency.Daily))
         end
     end
 end

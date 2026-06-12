@@ -174,28 +174,28 @@ function _G.BetterWorldQuestPinMixin:RefreshVisuals()
     self.Bounty:SetShown(bountyQuestID and C_QuestLog.IsQuestCriteriaForBounty(questID, bountyQuestID))
 
     local questInfo = C_QuestLog.GetQuestTagInfo(questID)
-    if questInfo.worldQuestType == Enum.QuestTagType_PvP then
+    if questInfo.worldQuestType == Enum.QuestTagType.PvP then
         self.Indicator:SetAtlas('Warfronts-BaseMapIcons-Empty-Barracks-Minimap')
         self.Indicator:SetSize(58, 58)
         self.Indicator:Show()
     else
         self.Indicator:SetSize(44, 44)
-        if questInfo.worldQuestType == Enum.QuestTagType_PetBattle then
+        if questInfo.worldQuestType == Enum.QuestTagType.PetBattle then
             self.Indicator:SetAtlas('WildBattlePetCapturable')
             self.Indicator:Show()
-        elseif questInfo.worldQuestType == Enum.QuestTagType_Profession then
+        elseif questInfo.worldQuestType == Enum.QuestTagType.Profession then
             self.Indicator:SetAtlas(_G.WORLD_QUEST_ICONS_BY_PROFESSION[questInfo.tradeskillLineID])
             self.Indicator:Show()
-        elseif questInfo.worldQuestType == Enum.QuestTagType_Dungeon then
+        elseif questInfo.worldQuestType == Enum.QuestTagType.Dungeon then
             self.Indicator:SetAtlas('Dungeon')
             self.Indicator:Show()
-        elseif questInfo.worldQuestType == Enum.QuestTagType_Raid then
+        elseif questInfo.worldQuestType == Enum.QuestTagType.Raid then
             self.Indicator:SetAtlas('Raid')
             self.Indicator:Show()
-        elseif questInfo.worldQuestType == Enum.QuestTagType_Invasion then
+        elseif questInfo.worldQuestType == Enum.QuestTagType.Invasion then
             self.Indicator:SetAtlas('worldquest-icon-burninglegion')
             self.Indicator:Show()
-        elseif questInfo.worldQuestType == Enum.QuestTagType_FactionAssault then
+        elseif questInfo.worldQuestType == Enum.QuestTagType.FactionAssault then
             self.Indicator:SetAtlas(factionAssaultAtlasName)
             self.Indicator:SetSize(38, 38)
             self.Indicator:Show()
