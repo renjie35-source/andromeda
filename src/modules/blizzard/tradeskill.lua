@@ -37,13 +37,9 @@ function BLIZZARD:UpdateProfessions()
         if numSpells > 0 then
             for i = 1, numSpells do
                 local slotID = i + spelloffset
-                if not IsPassiveSpell(slotID, _G.BOOKTYPE_PROFESSION) then
-                    local spellID = select(2, GetSpellBookItemInfo(slotID, _G.BOOKTYPE_PROFESSION))
-                    if i == 1 then
-                        BLIZZARD:TradeTabs_Create(spellID)
-                    else
-                        BLIZZARD:TradeTabs_Create(spellID)
-                    end
+                local info = C_SpellBook.GetSpellBookItemInfo(slotID, Enum.SpellBookSpellBank.Player)
+                if info and not info.isPassive then
+                    BLIZZARD:TradeTabs_Create(info.spellID)
                 end
             end
         end
