@@ -36,23 +36,9 @@ function UNITFRAME:SpawnBoss()
         if i == 1 then
             boss[i].mover = F.Mover(boss[i], title, 'Boss1', UNITFRAME.Positions.boss, moverWidth, moverHeight)
         elseif i == 6 then
-            boss[i].mover = F.Mover(
-                boss[i],
-                title,
-                'Boss' .. i,
-                { 'BOTTOMLEFT', boss[1].mover, 'BOTTOMRIGHT', 50, 0 },
-                moverWidth,
-                moverHeight
-            )
+            boss[i].mover = F.Mover(boss[i], title, 'Boss' .. i, { 'BOTTOMLEFT', boss[1].mover, 'BOTTOMRIGHT', 50, 0 }, moverWidth, moverHeight)
         else
-            boss[i].mover = F.Mover(
-                boss[i],
-                title,
-                'Boss' .. i,
-                { 'BOTTOMLEFT', boss[i - 1], 'TOPLEFT', 0, 60 },
-                moverWidth,
-                moverHeight
-            )
+            boss[i].mover = F.Mover(boss[i], title, 'Boss' .. i, { 'BOTTOMLEFT', boss[i - 1], 'TOPLEFT', 0, 60 }, moverWidth, moverHeight)
         end
     end
 end

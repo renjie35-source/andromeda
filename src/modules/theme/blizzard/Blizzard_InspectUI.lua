@@ -47,7 +47,7 @@ C.Themes['Blizzard_InspectUI'] = function()
     local function UpdateCosmetic(self)
         local unit = _G.InspectFrame.unit
         local itemLink = unit and GetInventoryItemLink(unit, self:GetID())
-        self.IconOverlay:SetShown(itemLink and IsCosmeticItem(itemLink))
+        self.IconOverlay:SetShown(itemLink and C_Item.IsCosmeticItem(itemLink))
     end
 
     hooksecurefunc('InspectPaperDollItemSlotButton_Update', function(button)

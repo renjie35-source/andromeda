@@ -164,9 +164,9 @@ hooksecurefunc('PaperDollFrame_SetLevel', function()
     local color = C.ClassColors[class]
     color = F:RgbToHex(color.r, color.g, color.b, 'ff')
 
-    primaryTalentTree, specName = GetSpecialization()
+    primaryTalentTree, specName = C_SpecializationInfo.GetSpecialization()
     if primaryTalentTree then
-        primaryTalentTree, specName = GetSpecializationInfo(primaryTalentTree)
+        primaryTalentTree, specName = C_SpecializationInfo.GetSpecializationInfo(primaryTalentTree)
     end
 
     local level = UnitLevel('player')

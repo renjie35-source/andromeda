@@ -151,18 +151,7 @@ function GUI:CreateDataFrame()
     F.SetBD(dataFrame)
 
     local outline = _G.ANDROMEDA_ADB.FontOutline
-    dataFrame.Header = F.CreateFS(
-        dataFrame,
-        C.Assets.Fonts.Regular,
-        14,
-        outline or nil,
-        L['Export settings'],
-        'YELLOW',
-        outline and 'NONE' or 'THICK',
-        'TOP',
-        0,
-        -5
-    )
+    dataFrame.Header = F.CreateFS(dataFrame, C.Assets.Fonts.Regular, 14, outline or nil, L['Export settings'], 'YELLOW', outline and 'NONE' or 'THICK', 'TOP', 0, -5)
 
     local scrollArea = CreateFrame('ScrollFrame', nil, dataFrame, 'UIPanelScrollFrameTemplate')
     scrollArea:SetPoint('TOPLEFT', 10, -30)

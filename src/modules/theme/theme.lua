@@ -15,7 +15,7 @@ function THEME:LoadSkins(list)
     end
 
     for addonName, func in pairs(list) do
-        local isLoaded, isFinished = IsAddOnLoaded(addonName)
+        local isLoaded, isFinished = C_AddOns.IsAddOnLoaded(addonName)
         if isLoaded and isFinished then
             func()
             list[addonName] = nil

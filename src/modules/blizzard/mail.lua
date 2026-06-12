@@ -71,9 +71,9 @@ function M:InboxItem_OnEnter()
         if itemAttached > 1 then
             _G.GameTooltip:AddLine(L['Attach List'])
             for itemID, count in pairs(inboxItems) do
-                local itemName, _, itemQuality, _, _, _, _, _, _, itemTexture = GetItemInfo(itemID)
+                local itemName, _, itemQuality, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(itemID)
                 if itemName then
-                    local r, g, b = GetItemQualityColor(itemQuality)
+                    local r, g, b = C_Item.GetItemQualityColor(itemQuality)
                     _G.GameTooltip:AddDoubleLine(' |T' .. itemTexture .. ':12:12:0:0:50:50:4:46:4:46|t ' .. itemName, count, r, g, b)
                 end
             end
@@ -473,7 +473,7 @@ function M:OnLogin()
     if not C.DB.General.EnhancedMailBox then
         return
     end
-    if IsAddOnLoaded('Postal') then
+    if C_AddOns.IsAddOnLoaded('Postal') then
         return
     end
 

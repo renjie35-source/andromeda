@@ -41,7 +41,7 @@ local function ReskinSessionDialog(_, dialog)
 end
 
 local function ReskinAWQHeader()
-    if IsAddOnLoaded('AngrierWorldQuests') then
+    if C_AddOns.IsAddOnLoaded('AngrierWorldQuests') then
         local button = _G['AngrierWorldQuestsHeader']
         if button and not button.styled then
             F.ReskinCollapse(button, true)

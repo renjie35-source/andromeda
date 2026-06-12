@@ -1247,11 +1247,10 @@ function InitializeEventHandler()
 end
 
 local function PlayerHasLockAndLoad()
-	local name, spellID, _
 	for i = 1, 40 do
-		name, _, _, _, _, _, _, _, _, spellID = UnitAura("player", i, "HELPFUL")
-		if not name then break end
-		if spellID == 194594 then
+		local aura = C_UnitAuras.GetAuraDataByIndex("player", i, "HELPFUL")
+		if not aura then break end
+		if aura.spellId == 194594 then
 			return true
 		end
 	end
@@ -2174,7 +2173,7 @@ else
 			-- based on ActionButton_UpdateFlyout in ActionButton.lua
 			local actionType = GetActionInfo(self._state_action)
 			if actionType == "flyout" then
-				local isMouseOverButton =  GetMouseFocus() == self;
+				local isMouseOverButton =  GetMouseFoci()[1] == self;
 
 				local isButtonDown
 				if (isButtonDownOverride ~= nil) then
@@ -2267,6 +2266,14 @@ Generic.GetSpellId              = function(self) return nil end
 Generic.GetLossOfControlCooldown = function(self) return 0, 0 end
 Generic.GetPassiveCooldownSpellID = function(self) return nil end
 
+local function GetSpellCooldownCompat(spellID)
+	local info = C_Spell.GetSpellCooldown(spellID)
+	if info then
+		return info.startTime, info.duration, info.isEnabled, info.modRate
+	end
+	return 0, 0, false, 1
+end
+
 -----------------------------------------------------------
 --- Action Button
 Action.HasAction               = function(self) return HasAction(self._state_action) end
@@ -2331,17 +2338,17 @@ end
 --- Spell Button
 Spell.HasAction               = function(self) return true end
 Spell.GetActionText           = function(self) return "" end
-Spell.GetTexture              = function(self) return GetSpellTexture(self._state_action) end
+Spell.GetTexture              = function(self) return C_Spell.GetSpellTexture(self._state_action) end
 Spell.GetCharges              = function(self) return GetSpellCharges(self._state_action) end
 Spell.GetCount                = function(self) return GetSpellCount(self._state_action) end
-Spell.GetCooldown             = function(self) return GetSpellCooldown(self._state_action) end
+Spell.GetCooldown             = function(self) return GetSpellCooldownCompat(self._state_action) end
 Spell.IsAttack                = function(self) return IsAttackSpell(FindSpellBookSlotBySpellID(self._state_action), "spell") end -- needs spell book id as of 4.0.1.13066
 Spell.IsEquipped              = function(self) return nil end
 Spell.IsCurrentlyActive       = function(self) return IsCurrentSpell(self._state_action) end
 Spell.IsAutoRepeat            = function(self) return IsAutoRepeatSpell(FindSpellBookSlotBySpellID(self._state_action), "spell") end -- needs spell book id as of 4.0.1.13066
 Spell.IsUsable                = function(self) return IsUsableSpell(self._state_action) end
 Spell.IsConsumableOrStackable = function(self) return IsConsumableSpell(self._state_action) end
-Spell.IsUnitInRange           = function(self, unit) return IsSpellInRange(FindSpellBookSlotBySpellID(self._state_action), "spell", unit) end -- needs spell book id as of 4.0.1.13066
+Spell.IsUnitInRange           = function(self, unit) return C_Spell.IsSpellInRange(self._state_action, unit) end
 Spell.SetTooltip              = function(self) return GameTooltip:SetSpellByID(self._state_action) end
 Spell.GetSpellId              = function(self) return self._state_action end
 Spell.GetLossOfControlCooldown = function(self) return GetSpellLossOfControlCooldown(self._state_action) end
@@ -2361,17 +2368,17 @@ end
 
 Item.HasAction               = function(self) return true end
 Item.GetActionText           = function(self) return "" end
-Item.GetTexture              = function(self) return GetItemIcon(self._state_action) end
+Item.GetTexture              = function(self) return C_Item.GetItemIconByID(self._state_action) end
 Item.GetCharges              = function(self) return nil end
-Item.GetCount                = function(self) return GetItemCount(self._state_action, nil, true) end
-Item.GetCooldown             = function(self) return GetItemCooldown(getItemId(self._state_action)) end
+Item.GetCount                = function(self) return C_Item.GetItemCount(self._state_action, nil, true) end
+Item.GetCooldown             = function(self) return C_Item.GetItemCooldown(getItemId(self._state_action)) end
 Item.IsAttack                = function(self) return nil end
-Item.IsEquipped              = function(self) return IsEquippedItem(self._state_action) end
+Item.IsEquipped              = function(self) return C_Item.IsEquippedItem(self._state_action) end
 Item.IsCurrentlyActive       = function(self) return IsCurrentItem(self._state_action) end
 Item.IsAutoRepeat            = function(self) return nil end
 Item.IsUsable                = function(self) return IsUsableItem(self._state_action) end
 Item.IsConsumableOrStackable = function(self) return IsConsumableItem(self._state_action) end
-Item.IsUnitInRange           = function(self, unit) return IsItemInRange(self._state_action, unit) end
+Item.IsUnitInRange           = function(self, unit) return C_Item.IsItemInRange(self._state_action, unit) end
 Item.SetTooltip              = function(self) return GameTooltip:SetHyperlink(self._state_action) end
 Item.GetSpellId              = function(self) return nil end
 Item.GetPassiveCooldownSpellID = function(self) return nil end

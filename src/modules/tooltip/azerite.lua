@@ -89,7 +89,7 @@ function TOOLTIP:Azerite_UpdateItem()
                 break
             end
 
-            local name, _, icon = GetSpellInfo(spellID)
+            local name, _, icon = F.GetSpellInfo(spellID)
             local found = name == powerList[lineIndex]
             if found then
                 tooltipText = tooltipText .. ' ' .. getIconString(icon, true)

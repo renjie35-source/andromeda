@@ -100,7 +100,7 @@ tinsert(C.BlizzThemes, function()
 
     local function UpdateCosmetic(self)
         local itemLink = GetInventoryItemLink('player', self:GetID())
-        self.IconOverlay:SetShown(itemLink and IsCosmeticItem(itemLink))
+        self.IconOverlay:SetShown(itemLink and C_Item.IsCosmeticItem(itemLink))
     end
 
     local slots = {

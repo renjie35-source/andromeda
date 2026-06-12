@@ -119,7 +119,7 @@ end
 local function Button_OnMouseUp(self, btn)
     if btn == 'LeftButton' then
         if not _G.StoreFrame then
-            LoadAddOn('Blizzard_StoreUI')
+            C_AddOns.LoadAddOn('Blizzard_StoreUI')
         end
         securecall(_G.ToggleStoreUI)
     elseif btn == 'RightButton' then

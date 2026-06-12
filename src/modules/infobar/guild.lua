@@ -311,7 +311,7 @@ local function Block_OnMouseUp(self)
     infoFrame:Hide()
 
     if not _G.CommunitiesFrame then
-        LoadAddOn('Blizzard_Communities')
+        C_AddOns.LoadAddOn('Blizzard_Communities')
     end
 
     if _G.CommunitiesFrame then

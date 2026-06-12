@@ -35,11 +35,7 @@ function BLIZZARD:EnhancedDressup()
         end
     end)
 
-    F.AddTooltip(
-        button,
-        'ANCHOR_TOP',
-        format(L['%s Undress all|n%s Undress tabard'], C.MOUSE_LEFT_BUTTON, C.MOUSE_RIGHT_BUTTON)
-    )
+    F.AddTooltip(button, 'ANCHOR_TOP', format(L['%s Undress all|n%s Undress tabard'], C.MOUSE_LEFT_BUTTON, C.MOUSE_RIGHT_BUTTON))
 
     _G.DressUpFrame.LinkButton:SetWidth(80)
     _G.DressUpFrame.LinkButton:SetText(_G.SOCIAL_SHARE_TEXT)

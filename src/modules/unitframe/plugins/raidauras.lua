@@ -7,7 +7,6 @@
 local F = unpack(select(2, ...))
 local oUF = F.Libs.oUF
 
-local UnitAura = UnitAura
 local UnitIsUnit = UnitIsUnit
 local UnitIsOwnerOrControllerOfUnit = UnitIsOwnerOrControllerOfUnit
 
@@ -18,7 +17,8 @@ local function UpdateAuras(element, list, maxButtons, unit, filter)
     list.num = 0
 
     for index = 1, maxButtons do
-        local name, texture, count, debuffType, duration, expiration, caster, isStealable, nameplateShowSelf, spellID, canApply, isBossAura, casterIsPlayer, nameplateShowAll, timeMod, effect1, effect2, effect3 = UnitAura(unit, index, filter)
+        local name, texture, count, debuffType, duration, expiration, caster, isStealable, nameplateShowSelf, spellID, canApply, isBossAura, _, nameplateShowAll, timeMod, effect1, effect2, effect3 =
+            F.UnitAura(unit, index, filter)
         if not name then
             break
         end

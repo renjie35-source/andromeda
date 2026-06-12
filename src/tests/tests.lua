@@ -30,5 +30,4 @@ function TEST:OnLogin()
     -- f.text5 = F.CreateFS(f, font, 30, true, 'AndromedaUI', nil, nil, 'TOP', 0, -180)
 
     -- f.text6 = F.CreateFS(f, nil, nil, nil, 'AndromedaUI', nil, nil, 'TOP', 0, -220)
-
 end

@@ -219,14 +219,14 @@ function keyFeedback:HookUseAction()
 end
 
 function keyFeedback:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellID)
-    if IsPlayerSpell(spellID) then
+    if C_SpellBook.IsSpellKnown(spellID) then
         if spellID == 75 then
             return
         end -- Autoshot
 
         if self.db.enableCastLine then
             local frame = self.iconPool:Acquire()
-            local texture = select(3, GetSpellInfo(spellID))
+            local texture = select(3, F.GetSpellInfo(spellID))
             frame.icon:SetTexture(texture)
             frame.icon:SetTexCoord(unpack(C.TEX_COORD))
             frame:Show()

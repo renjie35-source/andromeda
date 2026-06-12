@@ -38,16 +38,17 @@ end
 
 local infoTable = {}
 local function BuildAddonList()
-    local numAddons = GetNumAddOns()
+    local numAddons = C_AddOns.GetNumAddOns()
     if numAddons == #infoTable then
         return
     end
 
     wipe(infoTable)
     for i = 1, numAddons do
-        local _, title, _, loadable = GetAddOnInfo(i)
+        local name = C_AddOns.GetAddOnName(i)
+        local _, title, _, loadable = C_AddOns.GetAddOnInfo(name)
         if loadable then
-            tinsert(infoTable, { i, title, 0, 0 })
+            tinsert(infoTable, { name, title, 0, 0 })
         end
     end
 end
@@ -57,7 +58,7 @@ local function UpdateMemory()
 
     local total = 0
     for _, data in ipairs(infoTable) do
-        if IsAddOnLoaded(data[1]) then
+        if C_AddOns.IsAddOnLoaded(data[1]) then
             local mem = GetAddOnMemoryUsage(data[1])
             data[3] = mem
             total = total + mem
@@ -73,7 +74,7 @@ local function UpdateCPU()
 
     local total = 0
     for _, data in ipairs(infoTable) do
-        if IsAddOnLoaded(data[1]) then
+        if C_AddOns.IsAddOnLoaded(data[1]) then
             local addonCPU = GetAddOnCPUUsage(data[1])
             data[4] = addonCPU
             total = total + addonCPU
@@ -131,7 +132,7 @@ local function Block_OnEnter(self)
 
         local numEnabled = 0
         for _, data in ipairs(infoTable) do
-            if IsAddOnLoaded(data[1]) then
+            if C_AddOns.IsAddOnLoaded(data[1]) then
                 numEnabled = numEnabled + 1
                 if numEnabled <= maxShown then
                     local r, g, b = smoothColor(data[3], totalMemory)
@@ -145,7 +146,16 @@ local function Block_OnEnter(self)
             for i = (maxAddOns + 1), numEnabled do
                 hiddenMemory = hiddenMemory + infoTable[i][3]
             end
-            _G.GameTooltip:AddDoubleLine(format(showMoreString, numEnabled - maxAddOns, L['Hidden'], L['Hold SHIFT for more details']), formatMemory(hiddenMemory), 0.6, 0.8, 1, 0.6, 0.8, 1)
+            _G.GameTooltip:AddDoubleLine(
+                format(showMoreString, numEnabled - maxAddOns, L['Hidden'], L['Hold SHIFT for more details']),
+                formatMemory(hiddenMemory),
+                0.6,
+                0.8,
+                1,
+                0.6,
+                0.8,
+                1
+            )
         end
     else
         local totalCPU = UpdateCPU()
@@ -156,7 +166,7 @@ local function Block_OnEnter(self)
 
         local numEnabled = 0
         for _, data in ipairs(infoTable) do
-            if IsAddOnLoaded(data[1]) then
+            if C_AddOns.IsAddOnLoaded(data[1]) then
                 numEnabled = numEnabled + 1
                 if numEnabled <= maxShown then
                     local r, g, b = smoothColor(data[4], totalCPU)
@@ -170,7 +180,16 @@ local function Block_OnEnter(self)
             for i = (maxAddOns + 1), numEnabled do
                 hiddenUsage = hiddenUsage + infoTable[i][4]
             end
-            _G.GameTooltip:AddDoubleLine(format(showMoreString, numEnabled - maxAddOns, L['Hidden'], L['Hold SHIFT for more details']), format(usageString, hiddenUsage / passedTime), 0.6, 0.8, 1, 0.6, 0.8, 1)
+            _G.GameTooltip:AddDoubleLine(
+                format(showMoreString, numEnabled - maxAddOns, L['Hidden'], L['Hold SHIFT for more details']),
+                format(usageString, hiddenUsage / passedTime),
+                0.6,
+                0.8,
+                1,
+                0.6,
+                0.8,
+                1
+            )
         end
     end
 
@@ -180,7 +199,16 @@ local function Block_OnEnter(self)
     if scriptProfileStatus then
         _G.GameTooltip:AddDoubleLine(' ', C.MOUSE_RIGHT_BUTTON .. L['Switch Mode'] .. ' ', 1, 1, 1, 0.6, 0.8, 1)
     end
-    _G.GameTooltip:AddDoubleLine(' ', C.MOUSE_MIDDLE_BUTTON .. L['CPU Usage'] .. ': ' .. (GetCVarBool('scriptProfile') and enableString or disableString) .. ' ', 1, 1, 1, 0.6, 0.8, 1)
+    _G.GameTooltip:AddDoubleLine(
+        ' ',
+        C.MOUSE_MIDDLE_BUTTON .. L['CPU Usage'] .. ': ' .. (GetCVarBool('scriptProfile') and enableString or disableString) .. ' ',
+        1,
+        1,
+        1,
+        0.6,
+        0.8,
+        1
+    )
     _G.GameTooltip:Show()
 end
 

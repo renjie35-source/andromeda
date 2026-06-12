@@ -119,7 +119,7 @@ C.Themes['Blizzard_Collections'] = function()
         if petID and isOwned then
             local rarity = select(5, C_PetJournal.GetPetStats(petID))
             if rarity then
-                local r, g, b = GetItemQualityColor(rarity - 1)
+                local r, g, b = C_Item.GetItemQualityColor(rarity - 1)
                 button.name:SetTextColor(r, g, b)
             else
                 button.name:SetTextColor(1, 1, 1)
@@ -350,9 +350,9 @@ C.Themes['Blizzard_Collections'] = function()
         local itemID = bu.itemID
 
         if PlayerHasToy(itemID) then
-            local quality = select(3, GetItemInfo(itemID))
+            local quality = select(3, C_Item.GetItemInfo(itemID))
             if quality then
-                local r, g, b = GetItemQualityColor(quality)
+                local r, g, b = C_Item.GetItemQualityColor(quality)
                 text:SetTextColor(r, g, b)
             else
                 text:SetTextColor(1, 1, 1)
@@ -612,7 +612,7 @@ C.Themes['Blizzard_Collections'] = function()
     -- HPetBattleAny
     local reskinHPet
     CollectionsJournal:HookScript('OnShow', function()
-        if not IsAddOnLoaded('HPetBattleAny') then
+        if not C_AddOns.IsAddOnLoaded('HPetBattleAny') then
             return
         end
         if not reskinHPet then

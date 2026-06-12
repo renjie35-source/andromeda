@@ -44,9 +44,9 @@ local function ConstructFrame()
     disable.text:SetTextColor(1, 0.8, 0)
     disable:SetScript('OnClick', function()
         for _, addon in pairs(IncompatibleList) do
-            DisableAddOn(addon, true)
+            C_AddOns.DisableAddOn(addon)
             if AddonDependency[addon] then
-                DisableAddOn(AddonDependency[addon], true)
+                C_AddOns.DisableAddOn(AddonDependency[addon])
             end
         end
         ReloadUI()
@@ -55,7 +55,7 @@ end
 
 function NOTIFICATION:CheckIncompatible()
     for addon in pairs(IncompatibleAddOns) do
-        if IsAddOnLoaded(addon) then
+        if C_AddOns.IsAddOnLoaded(addon) then
             tinsert(IncompatibleList, addon)
         end
     end

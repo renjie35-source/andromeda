@@ -722,7 +722,7 @@ local function customJunkOnClick(self)
     local texture = info and info.iconFileID
     local itemID = info and info.itemID
 
-    local price = select(11, GetItemInfo(itemID))
+    local price = select(11, C_Item.GetItemInfo(itemID))
     if texture and price > 0 then
         if _G.ANDROMEDA_ADB['CustomJunkList'][itemID] then
             _G.ANDROMEDA_ADB['CustomJunkList'][itemID] = nil
@@ -767,8 +767,8 @@ function INVENTORY:OnLogin()
 
     local iconSize = C.DB.Inventory.SlotSize
     local showNewItem = C.DB.Inventory.NewItemFlash
-    local hasCanIMogIt = IsAddOnLoaded('CanIMogIt')
-    local hasPawn = IsAddOnLoaded('Pawn')
+    local hasCanIMogIt = C_AddOns.IsAddOnLoaded('CanIMogIt')
+    local hasPawn = C_AddOns.IsAddOnLoaded('Pawn')
 
     local Backpack = cargBags:NewImplementation(C.ADDON_TITLE .. 'Backpack')
     Backpack:RegisterBlizzard()
@@ -978,7 +978,7 @@ function INVENTORY:OnLogin()
 
         if C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID(item.link) then
             return 'AzeriteIconFrame'
-        elseif IsCosmeticItem(item.link) then
+        elseif C_Item.IsCosmeticItem(item.link) then
             return 'CosmeticIconFrame'
         elseif C_Soulbinds.IsItemConduitByItemInfo(item.link) then
             return 'ConduitIconFrame', 'ConduitIconFrame-Corners'
@@ -1091,7 +1091,7 @@ function INVENTORY:OnLogin()
                 return
             end
 
-            local _, _, itemRarity, _, _, _, _, _, _, _, _, _, _, bindType = GetItemInfo(itemLink)
+            local _, _, itemRarity, _, _, _, _, _, _, _, _, _, _, bindType = C_Item.GetItemInfo(itemLink)
             if F.IsBoA(item.bagId, item.slotId) or itemRarity == 7 or itemRarity == 8 then
                 self.BindType:SetText('|cff00ccffBOA|r')
             elseif not F.IsSoulBound(item.bagId, item.slotId) and bindType == 2 then
@@ -1226,7 +1226,7 @@ function INVENTORY:OnLogin()
         elseif name == 'BagReagent' then
             label = L['Reagent Bag']
         elseif name == 'BagStone' then
-            label = GetSpellInfo(404861)
+            label = F.GetSpellInfo(404861)
         end
 
         local outline = _G.ANDROMEDA_ADB.FontOutline
@@ -1328,7 +1328,7 @@ function INVENTORY:OnLogin()
             return
         end
 
-        local _, _, quality, _, _, _, _, _, _, _, _, classID, subClassID = GetItemInfo(id)
+        local _, _, quality, _, _, _, _, _, _, _, _, classID, subClassID = C_Item.GetItemInfo(id)
         if not quality or quality == 1 then
             quality = 0
         end

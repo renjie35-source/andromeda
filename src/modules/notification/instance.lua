@@ -94,58 +94,23 @@ function N:Instance_OnEvent()
         elseif spellID == 43987 then -- Mage Refreshment Table
             F:CreateNotification(L['Food'], format('%s: %s', srcName, GetSpellLink(spellID)), nil, icons.food)
         elseif spellID == 307157 then -- Eternal Cauldron
-            F:CreateNotification(
-                L['Cauldron'],
-                format('%s: %s', srcName, GetSpellLink(spellID)),
-                nil,
-                icons.cauldron
-            )
+            F:CreateNotification(L['Cauldron'], format('%s: %s', srcName, GetSpellLink(spellID)), nil, icons.cauldron)
         end
     elseif eventType == 'SPELL_SUMMON' then
         if bots[spellID] then
-            F:CreateNotification(
-                L['Repair'],
-                format('%s: %s', srcName, GetSpellLink(spellID)),
-                nil,
-                icons.bot
-            )
+            F:CreateNotification(L['Repair'], format('%s: %s', srcName, GetSpellLink(spellID)), nil, icons.bot)
         elseif spellID == 324029 then -- Codex of the Still Mind
-            F:CreateNotification(
-                L['Codex'],
-                format('%s: %s', srcName, GetSpellLink(spellID)),
-                nil,
-                icons.codex
-            )
+            F:CreateNotification(L['Codex'], format('%s: %s', srcName, GetSpellLink(spellID)), nil, icons.codex)
         elseif spellID == 261602 then -- Katy's Stampwhistle
-            F:CreateNotification(
-                L['Mailbox'],
-                format('%s: %s', srcName, GetSpellLink(spellID)),
-                nil,
-                icons.mailbox
-            )
+            F:CreateNotification(L['Mailbox'], format('%s: %s', srcName, GetSpellLink(spellID)), nil, icons.mailbox)
         end
     elseif eventType == 'SPELL_CREATE' then
         if spellID == 29893 then -- Soulwell
-            F:CreateNotification(
-                L['Soulwell'],
-                format('%s: %s', srcName, GetSpellLink(spellID)),
-                nil,
-                icons.soulwell
-            )
+            F:CreateNotification(L['Soulwell'], format('%s: %s', srcName, GetSpellLink(spellID)), nil, icons.soulwell)
         elseif spellID == 54710 then -- MOLL-E
-            F:CreateNotification(
-                L['Mailbox'],
-                format('%s: %s', srcName, GetSpellLink(spellID)),
-                nil,
-                icons.mailbox
-            )
+            F:CreateNotification(L['Mailbox'], format('%s: %s', srcName, GetSpellLink(spellID)), nil, icons.mailbox)
         elseif portals[spellID] then -- Mage Portals
-            F:CreateNotification(
-                L['Portal'],
-                format('%s: %s', srcName, GetSpellLink(spellID)),
-                nil,
-                icons.portal
-            )
+            F:CreateNotification(L['Portal'], format('%s: %s', srcName, GetSpellLink(spellID)), nil, icons.portal)
         end
     end
 end

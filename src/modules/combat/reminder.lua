@@ -164,19 +164,19 @@ function BR:Reminder_Update(cfg)
         if inGroup and GetNumGroupMembers() < 2 then
             isGrouped = false
         end
-        if equip and not IsEquippedItem(itemID) then
+        if equip and not C_Item.IsEquippedItem(itemID) then
             isEquipped = false
         end
-        if GetItemCount(itemID) == 0 or not isEquipped or not isGrouped or GetItemCooldown(itemID) > 0 then
+        if C_Item.GetItemCount(itemID) == 0 or not isEquipped or not isGrouped or C_Item.GetItemCooldown(itemID) > 0 then
             frame:Hide()
             return
         end
     end
 
-    if depend and not IsPlayerSpell(depend) then
+    if depend and not C_SpellBook.IsSpellKnown(depend) then
         isPlayerSpell = false
     end
-    if spec and spec ~= GetSpecialization() then
+    if spec and spec ~= C_SpecializationInfo.GetSpecialization() then
         isRightSpec = false
     end
     if combat and InCombatLockdown() then
@@ -185,7 +185,7 @@ function BR:Reminder_Update(cfg)
     if instance and inInst and (instType == 'scenario' or instType == 'party' or instType == 'raid') then
         isInInst = true
     end
-    if pvp and (instType == 'arena' or instType == 'pvp' or GetZonePVPInfo() == 'combat') then
+    if pvp and (instType == 'arena' or instType == 'pvp' or C_PvP.GetZonePVPInfo() == 'combat') then
         isInPVP = true
     end
     if not combat and not instance and not pvp then
@@ -225,7 +225,7 @@ function BR:Reminder_Create(cfg)
     local texture = cfg.texture
     if not texture then
         for spellID in pairs(cfg.spells) do
-            texture = GetSpellTexture(spellID)
+            texture = F.GetSpellTexture(spellID)
             break
         end
     end
@@ -261,9 +261,9 @@ end
 
 function BR:Reminder_AddItemGroup()
     for _, value in pairs(buffsList['ITEMS']) do
-        if not value.disable and GetItemCount(value.itemID) > 0 then
+        if not value.disable and C_Item.GetItemCount(value.itemID) > 0 then
             if not value.texture then
-                value.texture = GetItemIcon(value.itemID)
+                value.texture = C_Item.GetItemIconByID(value.itemID)
             end
             if not groups then
                 groups = {}

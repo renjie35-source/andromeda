@@ -702,7 +702,6 @@ GUI.OptionsList = {
             nil,
             L['If checked, only popout join requests from friends and guild members.'],
         },
-
     },
     [2] = { -- notification
         {

@@ -63,7 +63,6 @@ function UNITFRAME:CreateAlternativePowerBar(self)
     self.AlternativePower.PostUpdate = postUpdate
 end
 
-
 function UNITFRAME:UpdateAlternativePower()
     for _, frame in pairs(oUF.objects) do
         if C.DB.Unitframe.AlternativePower then

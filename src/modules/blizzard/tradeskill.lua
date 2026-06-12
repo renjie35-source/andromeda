@@ -22,7 +22,7 @@ function BLIZZARD:UpdateProfessions()
 
     if C.MY_CLASS == 'DEATHKNIGHT' then
         BLIZZARD:TradeTabs_Create(RUNEFORGING_ID)
-    elseif C.MY_CLASS == 'ROGUE' and IsPlayerSpell(PICK_LOCK) then
+    elseif C.MY_CLASS == 'ROGUE' and C_SpellBook.IsSpellKnown(PICK_LOCK) then
         BLIZZARD:TradeTabs_Create(PICK_LOCK)
     end
 
@@ -52,7 +52,7 @@ function BLIZZARD:UpdateProfessions()
     if isCook and PlayerHasToy(CHEF_HAT) and C_ToyBox.IsToyUsable(CHEF_HAT) then
         BLIZZARD:TradeTabs_Create(nil, CHEF_HAT)
     end
-    if GetItemCount(THERMAL_ANVIL) > 0 then
+    if C_Item.GetItemCount(THERMAL_ANVIL) > 0 then
         BLIZZARD:TradeTabs_Create(nil, nil, THERMAL_ANVIL)
     end
 end
@@ -72,9 +72,9 @@ function BLIZZARD:TradeTabs_Update()
 
         local start, duration
         if itemID then
-            start, duration = GetItemCooldown(itemID)
+            start, duration = C_Item.GetItemCooldown(itemID)
         else
-            start, duration = GetSpellCooldown(spellID)
+            start, duration = F.GetSpellCooldown(spellID)
         end
         if start and duration and duration > 1.5 then
             tab.CD:SetCooldown(start, duration)
@@ -104,9 +104,9 @@ function BLIZZARD:TradeTabs_Create(spellID, toyID, itemID)
     if toyID then
         _, name, texture = C_ToyBox.GetToyInfo(toyID)
     elseif itemID then
-        name, _, _, _, _, _, _, _, _, texture = GetItemInfo(itemID)
+        name, _, _, _, _, _, _, _, _, texture = C_Item.GetItemInfo(itemID)
     else
-        name, _, texture = GetSpellInfo(spellID)
+        name, _, texture = F.GetSpellInfo(spellID)
     end
     if not name then
         return

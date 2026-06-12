@@ -64,15 +64,15 @@ end
 
 local function checkSpecs()
     if C.MY_CLASS == 'DRUID' then
-        DispellFilter.Magic = GetSpecialization() == 4
+        DispellFilter.Magic = C_SpecializationInfo.GetSpecialization() == 4
     elseif C.MY_CLASS == 'MONK' then
-        DispellFilter.Magic = GetSpecialization() == 2
+        DispellFilter.Magic = C_SpecializationInfo.GetSpecialization() == 2
     elseif C.MY_CLASS == 'PALADIN' then
-        DispellFilter.Magic = GetSpecialization() == 1
+        DispellFilter.Magic = C_SpecializationInfo.GetSpecialization() == 1
     elseif C.MY_CLASS == 'SHAMAN' then
-        DispellFilter.Magic = GetSpecialization() == 3
+        DispellFilter.Magic = C_SpecializationInfo.GetSpecialization() == 3
     elseif C.MY_CLASS == 'EVOKER' then
-        DispellFilter.Magic = GetSpecialization() == 2
+        DispellFilter.Magic = C_SpecializationInfo.GetSpecialization() == 2
     end
 end
 

@@ -206,7 +206,7 @@ function GT:RaidTool_CombatRes(parent)
     local res = CreateFrame('Frame', nil, frame)
     res:SetSize(22, 22)
     res:SetPoint('LEFT', 5, 0)
-    F.PixelIcon(res, GetSpellTexture(20484))
+    F.PixelIcon(res, F.GetSpellTexture(20484))
     res.__owner = parent
 
     local outline = _G.ANDROMEDA_ADB.FontOutline
@@ -287,8 +287,8 @@ function GT:RaidTool_Marker(parent)
     local markerButton = _G.CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton
     if not markerButton then
         for _, addon in next, { 'Blizzard_CUFProfiles', 'Blizzard_CompactRaidFrames' } do
-            EnableAddOn(addon)
-            LoadAddOn(addon)
+            C_AddOns.EnableAddOn(addon)
+            C_AddOns.LoadAddOn(addon)
         end
     end
     if markerButton then
@@ -373,9 +373,9 @@ function GT:RaidTool_BuffChecker(parent)
                     local HasBuff
                     local buffTable = buffsList[j]
                     for k = 1, #buffTable do
-                        local buffName = GetSpellInfo(buffTable[k])
+                        local buffName = F.GetSpellInfo(buffTable[k])
                         for index = 1, 32 do
-                            local currentBuff = UnitAura(name, index)
+                            local currentBuff = F.UnitAura(name, index)
                             if currentBuff and currentBuff == buffName then
                                 HasBuff = true
                                 break
@@ -406,7 +406,7 @@ function GT:RaidTool_BuffChecker(parent)
         end
     end
 
-    local potionCheck = IsAddOnLoaded('MRT')
+    local potionCheck = C_AddOns.IsAddOnLoaded('MRT')
 
     frame:HookScript('OnEnter', function(self)
         _G.GameTooltip:SetOwner(self, 'ANCHOR_BOTTOM', 0, -3)
@@ -447,16 +447,16 @@ function GT:RaidTool_BuffChecker(parent)
             end
         else
             if IsInGroup() and (UnitIsGroupLeader('player') or (UnitIsGroupAssistant('player') and IsInRaid())) then
-                if IsAddOnLoaded('DBM-Core') then
+                if C_AddOns.IsAddOnLoaded('DBM-Core') then
                     if reset then
                         _G.SlashCmdList['DEADLYBOSSMODS']('pull ' .. C.DB.General.Countdown)
                     else
                         _G.SlashCmdList['DEADLYBOSSMODS']('pull 0')
                     end
                     reset = not reset
-                elseif IsAddOnLoaded('BigWigs') then
+                elseif C_AddOns.IsAddOnLoaded('BigWigs') then
                     if not _G.SlashCmdList['BIGWIGSPULL'] then
-                        LoadAddOn('BigWigs_Plugins')
+                        C_AddOns.LoadAddOn('BigWigs_Plugins')
                     end
                     if reset then
                         _G.SlashCmdList['BIGWIGSPULL'](C.DB.General.Countdown)

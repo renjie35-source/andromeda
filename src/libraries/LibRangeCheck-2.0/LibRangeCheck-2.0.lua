@@ -60,20 +60,20 @@ local tinsert = tinsert
 local tremove = tremove
 local tostring = tostring
 local setmetatable = setmetatable
-local BOOKTYPE_SPELL = BOOKTYPE_SPELL
-local GetSpellInfo = GetSpellInfo
-local GetSpellBookItemName = GetSpellBookItemName
-local GetNumSpellTabs = GetNumSpellTabs
-local GetSpellTabInfo = GetSpellTabInfo
-local GetItemInfo = GetItemInfo
+local PLAYER_SPELL_BANK = Enum.SpellBookSpellBank.Player
+local GetSpellBookItemName = C_SpellBook.GetSpellBookItemName
+local GetNumSpellBookSkillLines = C_SpellBook.GetNumSpellBookSkillLines
+local GetSpellBookSkillLineInfo = C_SpellBook.GetSpellBookSkillLineInfo
+local FindSpellBookSlotForSpell = C_SpellBook.FindSpellBookSlotForSpell
+local GetItemInfo = C_Item.GetItemInfo
 local UnitCanAttack = UnitCanAttack
 local UnitCanAssist = UnitCanAssist
 local UnitExists = UnitExists
 local UnitIsUnit = UnitIsUnit
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 local CheckInteractDistance = CheckInteractDistance
-local IsSpellInRange = IsSpellInRange
-local IsItemInRange = IsItemInRange
+local IsSpellInRange = C_Spell.IsSpellInRange
+local IsItemInRange = C_Item.IsItemInRange
 local UnitClass = UnitClass
 local UnitRace = UnitRace
 local GetInventoryItemLink = GetInventoryItemLink
@@ -81,6 +81,15 @@ local GetTime = GetTime
 local HandSlotId = GetInventorySlotInfo("HandsSlot")
 local math_floor = math.floor
 local UnitIsVisible = UnitIsVisible
+
+local function GetSpellInfo(spell)
+	local info = C_Spell.GetSpellInfo(spell)
+	if not info then
+		return
+	end
+
+	return info.name, nil, info.iconID, info.castTime, info.minRange, info.maxRange, info.spellID, info.originalIconID
+end
 
 -- << STATIC CONFIG
 
@@ -524,26 +533,26 @@ local lastUpdate = 0
 local minRangeCheck = function(unit) return CheckInteractDistance(unit, 2) end
 
 local checkers_Spell = setmetatable({}, {
-	__index = function(t, spellIdx)
+	__index = function(t, spell)
 		local func = function(unit)
-			if IsSpellInRange(spellIdx, BOOKTYPE_SPELL, unit) == 1 then
+			if IsSpellInRange(spell, unit) then
 				 return true
 			end
 		end
-		t[spellIdx] = func
+		t[spell] = func
 		return func
 	end
 })
 local checkers_SpellWithMin = setmetatable({}, {
-	__index = function(t, spellIdx)
+	__index = function(t, spell)
 		local func = function(unit)
-			if IsSpellInRange(spellIdx, BOOKTYPE_SPELL, unit) == 1 then
+			if IsSpellInRange(spell, unit) then
 				return true
 			elseif minRangeCheck(unit) then
 				return true, true
 			end
 		end
-		t[spellIdx] = func
+		t[spell] = func
 		return func
 	end
 })
@@ -590,7 +599,15 @@ local function initItemRequests(cacheAll)
 end
 
 local function getNumSpells()
-	local _, _, offset, numSpells = GetSpellTabInfo(GetNumSpellTabs())
+	local offset, numSpells = 0, 0
+	for i = 1, GetNumSpellBookSkillLines() do
+		local info = GetSpellBookSkillLineInfo(i)
+		if info and not info.shouldHide then
+			offset = math.max(offset, info.itemIndexOffset or 0)
+			numSpells = math.max(numSpells, info.numSpellBookItems or 0)
+		end
+	end
+
 	return offset + numSpells
 end
 
@@ -600,7 +617,7 @@ local function findSpellIdx(spellName)
 		return nil
 	end
 	for i = 1, getNumSpells() do
-		local spell = GetSpellBookItemName(i, BOOKTYPE_SPELL)
+		local spell = GetSpellBookItemName(i, PLAYER_SPELL_BANK)
 		if spell == spellName then
 			return i
 		end
@@ -640,7 +657,7 @@ local function createCheckerList(spellList, itemList, interactList)
 		for i = 1, #spellList do
 			local sid = spellList[i]
 			local name, _, _, _, minRange, range = GetSpellInfo(sid)
-			local spellIdx = findSpellIdx(name)
+			local spellIdx = name and FindSpellBookSlotForSpell(name)
 			if spellIdx and range then
 				minRange = math_floor(minRange + 0.5)
 				range = math_floor(range + 0.5)
@@ -656,9 +673,9 @@ local function createCheckerList(spellList, itemList, interactList)
 				end
 
 				if minRange then
-					addChecker(res, range, minRange, checkers_SpellWithMin[spellIdx], "spell:" .. sid .. ":" .. tostring(name))
+					addChecker(res, range, minRange, checkers_SpellWithMin[sid], "spell:" .. sid .. ":" .. tostring(name))
 				else
-					addChecker(res, range, minRange, checkers_Spell[spellIdx], "spell:" .. sid .. ":" .. tostring(name))
+					addChecker(res, range, minRange, checkers_Spell[sid], "spell:" .. sid .. ":" .. tostring(name))
 				end
 			end
 		end

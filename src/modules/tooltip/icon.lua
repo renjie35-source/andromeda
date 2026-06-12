@@ -41,15 +41,15 @@ end
 
 local getTooltipTextureByType = {
     [Enum.TooltipDataType.Item] = function(id)
-        return GetItemIcon(id)
+        return C_Item.GetItemIconByID(id)
     end,
 
     [Enum.TooltipDataType.Toy] = function(id)
-        return GetItemIcon(id)
+        return C_Item.GetItemIconByID(id)
     end,
 
     [Enum.TooltipDataType.Spell] = function(id)
-        return GetSpellTexture(id)
+        return F.GetSpellTexture(id)
     end,
 
     [Enum.TooltipDataType.Mount] = function(id)

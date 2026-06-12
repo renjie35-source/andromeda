@@ -204,7 +204,7 @@ function ECF:KeystoneInfo_WeeklyRuns()
 end
 
 function ECF:KeystoneInfo_Create()
-    local texture = select(10, GetItemInfo(158923)) or 525134
+    local texture = select(10, C_Item.GetItemInfo(158923)) or 525134
     local iconColor = C.QualityColors[Enum.ItemQuality.Epic or 4]
     local button = CreateFrame('Frame', nil, _G.ChallengesFrame.WeeklyInfo, 'BackdropTemplate')
     button:SetPoint('BOTTOMLEFT', 10, 67)
@@ -259,7 +259,7 @@ function ECF:KeystoneInfo_Update()
 end
 
 function ECF:OnLogin()
-    hasAngryKeystones = IsAddOnLoaded('AngryKeystones')
+    hasAngryKeystones = C_AddOns.IsAddOnLoaded('AngryKeystones')
     F:RegisterEvent('ADDON_LOADED', ECF.GuildBest_OnLoad)
 
     ECF:KeystoneInfo_Update()

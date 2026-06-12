@@ -30,7 +30,7 @@ function ANNOUNCEMENT:RefreshSpells()
     wipe(ANNOUNCEMENT.AnnounceableSpellsList)
 
     for spellID in pairs(C.AnnounceableSpellsList) do
-        local name = GetSpellInfo(spellID)
+        local name = F.GetSpellInfo(spellID)
         if name then
             local modValue = _G.ANDROMEDA_ADB['AnnounceableSpellsList'][spellID]
             if modValue == nil then
@@ -51,8 +51,7 @@ function ANNOUNCEMENT:OnEvent()
         return true
     end
 
-    local _, eventType, _, srcGUID, srcName, srcFlags, _, _, destName, _, _, spellID, _, _, extraSpellID =
-        CombatLogGetCurrentEventInfo()
+    local _, eventType, _, srcGUID, srcName, srcFlags, _, _, destName, _, _, spellID, _, _, extraSpellID = CombatLogGetCurrentEventInfo()
 
     if not srcGUID or srcName == destName then
         return
@@ -65,10 +64,7 @@ function ANNOUNCEMENT:OnEvent()
     if eventType == 'SPELL_MISSED' and C.DB.Announcement.Reflect then
         local id, _, _, missType = select(12, CombatLogGetCurrentEventInfo())
         if missType == 'REFLECT' and destName == C.MY_NAME then
-            SendChatMessage(
-                format(_G.COMBAT_TEXT_REFLECT .. ' %s %s', arrowStr, GetSpellLink(id)),
-                GetChannel()
-            )
+            SendChatMessage(format(_G.COMBAT_TEXT_REFLECT .. ' %s %s', arrowStr, GetSpellLink(id)), GetChannel())
         end
     end
 
@@ -79,37 +75,17 @@ function ANNOUNCEMENT:OnEvent()
     if eventType == 'SPELL_CAST_SUCCESS' then
         if ANNOUNCEMENT.AnnounceableSpellsList[spellID] and C.DB.Announcement.Spells then
             if destName == nil then
-                SendChatMessage(
-                    format(_G.ACTION_SPELL_CAST_SUCCESS .. ' %s', GetSpellLink(spellID)),
-                    GetChannel()
-                )
+                SendChatMessage(format(_G.ACTION_SPELL_CAST_SUCCESS .. ' %s', GetSpellLink(spellID)), GetChannel())
             else
-                SendChatMessage(
-                    format(
-                        _G.ACTION_SPELL_CAST_SUCCESS .. ' %s %s %s',
-                        GetSpellLink(spellID),
-                        arrowStr,
-                        destName
-                    ),
-                    GetChannel()
-                )
+                SendChatMessage(format(_G.ACTION_SPELL_CAST_SUCCESS .. ' %s %s %s', GetSpellLink(spellID), arrowStr, destName), GetChannel())
             end
         end
     elseif eventType == 'SPELL_INTERRUPT' and C.DB.Announcement.Interrupt then
-        SendChatMessage(
-            format(_G.ACTION_SPELL_INTERRUPT .. ' %s %s', arrowStr, GetSpellLink(extraSpellID)),
-            GetChannel()
-        )
+        SendChatMessage(format(_G.ACTION_SPELL_INTERRUPT .. ' %s %s', arrowStr, GetSpellLink(extraSpellID)), GetChannel())
     elseif eventType == 'SPELL_DISPEL' and C.DB.Announcement.Dispel then
-        SendChatMessage(
-            format(_G.ACTION_SPELL_DISPEL .. ' %s %s', arrowStr, GetSpellLink(extraSpellID)),
-            GetChannel()
-        )
+        SendChatMessage(format(_G.ACTION_SPELL_DISPEL .. ' %s %s', arrowStr, GetSpellLink(extraSpellID)), GetChannel())
     elseif eventType == 'SPELL_STOLEN' and C.DB.Announcement.Stolen then
-        SendChatMessage(
-            format(_G.ACTION_SPELL_STOLEN .. ' %s %s', arrowStr, GetSpellLink(extraSpellID)),
-            GetChannel()
-        )
+        SendChatMessage(format(_G.ACTION_SPELL_STOLEN .. ' %s %s', arrowStr, GetSpellLink(extraSpellID)), GetChannel())
     end
 end
 
@@ -119,7 +95,7 @@ end
 
 function ANNOUNCEMENT:CheckAnnounceableSpells()
     for spellID in pairs(C.AnnounceableSpellsList) do
-        local name = GetSpellInfo(spellID)
+        local name = F.GetSpellInfo(spellID)
         if name then
             if _G.ANDROMEDA_ADB['AnnounceableSpellsList'][spellID] then
                 _G.ANDROMEDA_ADB['AnnounceableSpellsList'][spellID] = nil

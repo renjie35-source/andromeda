@@ -31,7 +31,7 @@ local function OnEvent(self, event, ...)
             return
         end
 
-        local PVPType = GetZonePVPInfo()
+        local PVPType = C_PvP.GetZonePVPInfo()
         local _, ZoneType = IsInInstance()
 
         TargetKey = GetBindingKey('TARGETNEARESTENEMYPLAYER')

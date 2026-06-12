@@ -47,7 +47,7 @@ function TOOLTIP:ReskinTooltip()
     if data then
         local link = data.guid and C_Item.GetItemLinkByGUID(data.guid) or data.hyperlink
         if link then
-            local quality = select(3, GetItemInfo(link))
+            local quality = select(3, C_Item.GetItemInfo(link))
             local color = C.QualityColors[quality or 1]
             if color then
                 self.bg:SetBackdropBorderColor(color.r, color.g, color.b)
@@ -257,7 +257,7 @@ TOOLTIP:RegisterTooltips(C.ADDON_NAME, function()
         end
     end)
 
-    if IsAddOnLoaded('BattlePetBreedID') then
+    if C_AddOns.IsAddOnLoaded('BattlePetBreedID') then
         hooksecurefunc('BPBID_SetBreedTooltip', function(parent)
             if parent == _G.FloatingBattlePetTooltip then
                 TOOLTIP.ReskinTooltip(_G.BPBID_BreedTooltip2)

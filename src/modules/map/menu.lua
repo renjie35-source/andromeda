@@ -26,38 +26,38 @@ MAP.MenuList = {
     {
         text = _G.CHAT_CHANNELS,
         notCheckable = true,
-        func = ToggleChannelFrame
+        func = ToggleChannelFrame,
     },
     {
         text = _G.SOCIAL_BUTTON,
         notCheckable = true,
-        func = ToggleFriendsFrame
+        func = ToggleFriendsFrame,
     },
     {
         text = _G.TALENTS_BUTTON,
         notCheckable = true,
-        func = ToggleTalentFrame
+        func = ToggleTalentFrame,
     },
     {
         text = _G.GUILD,
         notCheckable = true,
-        func = ToggleGuildFrame
+        func = ToggleGuildFrame,
     },
     {
         text = _G.LFG_TITLE,
         notCheckable = true,
-        func = ToggleLFDParentFrame
+        func = ToggleLFDParentFrame,
     },
 
     {
         text = _G.COLLECTIONS,
         notCheckable = true,
-        func = ToggleCollectionsJournal
+        func = ToggleCollectionsJournal,
     },
     {
         text = _G.ACHIEVEMENT_BUTTON,
         notCheckable = true,
-        func = ToggleAchievementFrame
+        func = ToggleAchievementFrame,
     },
     {
         text = L['Calendar'],
@@ -84,7 +84,7 @@ MAP.MenuList = {
         text = _G.ENCOUNTER_JOURNAL,
         notCheckable = true,
         func = function()
-            if not IsAddOnLoaded('Blizzard_EncounterJournal') then
+            if not C_AddOns.IsAddOnLoaded('Blizzard_EncounterJournal') then
                 UIParentLoadAddOn('Blizzard_EncounterJournal')
             end
             ToggleFrame(_G.EncounterJournal)

@@ -13,13 +13,7 @@ function BLIZZARD:UpdateMerchantItemPos()
             if i == 1 then
                 button:SetPoint('TOPLEFT', _G.MerchantFrame, 'TOPLEFT', 24, -70)
             else
-                button:SetPoint(
-                    'TOPLEFT',
-                    _G['MerchantItem' .. (i - (OLD_MERCHANT_ITEMS_PER_PAGE - 1))],
-                    'TOPRIGHT',
-                    12,
-                    0
-                )
+                button:SetPoint('TOPLEFT', _G['MerchantItem' .. (i - (OLD_MERCHANT_ITEMS_PER_PAGE - 1))], 'TOPRIGHT', 12, 0)
             end
         else
             if (i % 2) == 1 then
@@ -94,7 +88,7 @@ function BLIZZARD:RestyleElemennts()
 end
 
 function BLIZZARD:EnhancedMerchant()
-    if IsAddOnLoaded('ExtVendor') then
+    if C_AddOns.IsAddOnLoaded('ExtVendor') then
         return
     end
     if not C.DB.General.EnhancedMerchant then

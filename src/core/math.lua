@@ -103,13 +103,7 @@ function F:TextGradient(text, ...)
             if not r2 then
                 msg = msg .. F:RgbToHex(r1, g1, b1, nil, x .. '|r')
             else
-                msg = msg .. F:RgbToHex(
-                    r1 + (r2 - r1) * relperc,
-                    g1 + (g2 - g1) * relperc,
-                    b1 + (b2 - b1) * relperc,
-                    nil,
-                    x .. '|r'
-                )
+                msg = msg .. F:RgbToHex(r1 + (r2 - r1) * relperc, g1 + (g2 - g1) * relperc, b1 + (b2 - b1) * relperc, nil, x .. '|r')
                 idx = idx + 1
             end
         end
@@ -148,10 +142,8 @@ function F:FramesOverlap(frameA, frameB)
         return
     end
 
-    local frameALeft, frameARight, frameABottom, frameATop =
-        frameA:GetLeft(), frameA:GetRight(), frameA:GetBottom(), frameA:GetTop()
-    local frameBLeft, frameBRight, frameBBottom, frameBTop =
-        frameB:GetLeft(), frameB:GetRight(), frameB:GetBottom(), frameB:GetTop()
+    local frameALeft, frameARight, frameABottom, frameATop = frameA:GetLeft(), frameA:GetRight(), frameA:GetBottom(), frameA:GetTop()
+    local frameBLeft, frameBRight, frameBBottom, frameBTop = frameB:GetLeft(), frameB:GetRight(), frameB:GetBottom(), frameB:GetTop()
     if not (frameALeft and frameARight and frameABottom and frameATop) then
         return
     end

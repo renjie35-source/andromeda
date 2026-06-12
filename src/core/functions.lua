@@ -61,11 +61,65 @@ do
             if name == addonName then
                 callback()
                 return true
-            elseif name == C.ADDON_NAME and IsAddOnLoaded(addonName) then
+            elseif name == C.ADDON_NAME and C_AddOns.IsAddOnLoaded(addonName) then
                 callback()
                 return true
             end
         end)
+    end
+
+    --
+
+    function F.GetSpellInfo(spellID)
+        local info = C_Spell.GetSpellInfo(spellID)
+        if not info then
+            return
+        end
+
+        return info.name, nil, info.iconID, info.castTime, info.minRange, info.maxRange, info.spellID, info.originalIconID
+    end
+
+    function F.GetSpellTexture(spellID)
+        return C_Spell.GetSpellTexture(spellID)
+    end
+
+    function F.GetSpellCooldown(spellID)
+        local info = C_Spell.GetSpellCooldown(spellID)
+        if not info then
+            return 0, 0, false, 1
+        end
+
+        return info.startTime, info.duration, info.isEnabled, info.modRate
+    end
+
+    function F.UnitAura(unit, index, filter)
+        local aura = C_UnitAuras.GetAuraDataByIndex(unit, index, filter)
+        if not aura then
+            return
+        end
+
+        return aura.name,
+            aura.icon,
+            aura.applications,
+            aura.dispelName,
+            aura.duration,
+            aura.expirationTime,
+            aura.sourceUnit,
+            aura.isStealable,
+            aura.nameplateShowPersonal,
+            aura.spellId,
+            aura.canApplyAura,
+            aura.isBossAura,
+            aura.isFromPlayerOrPlayerPet,
+            aura.nameplateShowAll,
+            aura.timeMod,
+            aura.points and aura.points[1],
+            aura.points and aura.points[2],
+            aura.points and aura.points[3]
+    end
+
+    function F.GetMouseFocus()
+        return GetMouseFoci()[1]
     end
 
     --

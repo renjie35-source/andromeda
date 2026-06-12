@@ -90,18 +90,7 @@ local function ConstructTextString(f)
         0,
         C.UI_GAP
     )
-    f.timer = F.CreateFS(
-        f,
-        C.ASSET_PATH .. 'fonts\\suez-one.ttf',
-        56,
-        outline or nil,
-        'timer',
-        'CLASS',
-        outline and 'NONE' or 'THICK',
-        'TOP',
-        0,
-        -C.UI_GAP
-    )
+    f.timer = F.CreateFS(f, C.ASSET_PATH .. 'fonts\\suez-one.ttf', 56, outline or nil, 'timer', 'CLASS', outline and 'NONE' or 'THICK', 'TOP', 0, -C.UI_GAP)
 end
 
 local function ConstructAnimation(f)
@@ -148,7 +137,9 @@ end
 function SS:UpdateScreenSaver()
     local f = _G[C.ADDON_TITLE .. 'ScreenSave']
 
-    if not f then return end
+    if not f then
+        return
+    end
 
     if C.DB.General.ScreenSaver then
         if not f then

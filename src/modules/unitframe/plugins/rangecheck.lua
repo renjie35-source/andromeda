@@ -147,8 +147,8 @@ local function IsUnitInRange(unit)
         end
         if canHelp or canAttack then
             for i = 1, #rangeSpells do
-                if IsSpellKnown(rangeSpells[i]) then
-                    if IsSpellInRange(GetSpellInfo(rangeSpells[i]), unit) == 1 then
+                if C_SpellBook.IsSpellKnown(rangeSpells[i]) then
+                    if C_Spell.IsSpellInRange(rangeSpells[i], unit) then
                         return true
                     end
                 end

@@ -38,7 +38,7 @@ local channelingTicks = {
 if C.MY_CLASS == 'PRIEST' then
     local function updateTicks()
         local numTicks = 3
-        if IsPlayerSpell(193134) then
+        if C_SpellBook.IsSpellKnown(193134) then
             numTicks = 4
         end
         channelingTicks[47757] = numTicks

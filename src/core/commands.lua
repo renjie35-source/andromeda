@@ -109,7 +109,7 @@ F:RegisterSlashCommand('/spec', function(msg)
     if specID then
         local canUse, failureReason = C_SpecializationInfo.CanPlayerUseTalentSpecUI()
         if canUse then
-            if GetSpecialization() ~= specID then
+            if C_SpecializationInfo.GetSpecialization() ~= specID then
                 SetSpecialization(specID)
             end
         else
@@ -152,7 +152,7 @@ do
     end
 
     F:RegisterSlashCommand('/way', function(msg)
-        if IsAddOnLoaded('TomTom') then
+        if C_AddOns.IsAddOnLoaded('TomTom') then
             return
         end
         msg = gsub(msg, '(%d)[%.,] (%d)', '%1 %2')
@@ -188,16 +188,16 @@ F:RegisterSlashCommand('/rl', function()
 end)
 
 F:RegisterSlashCommand('/fs', function()
-    _G.UIParentLoadAddOn('Blizzard_DebugTools')
+    C_AddOns.LoadAddOn('Blizzard_DebugTools')
     _G.FrameStackTooltip_Toggle(false, true, true)
 end)
 
 -- Disable all addons except andromeda and debug tool
 F:RegisterSlashCommand('/debugmode', function()
-    for i = 1, GetNumAddOns() do
-        local name = GetAddOnInfo(i)
-        if name ~= C.ADDON_NAME and name ~= '!BaudErrorFrame' and name ~= 'REHack' and GetAddOnEnableState(C.MY_NAME, name) == 2 then
-            DisableAddOn(name, C.MY_NAME)
+    for i = 1, C_AddOns.GetNumAddOns() do
+        local name = C_AddOns.GetAddOnName(i)
+        if name ~= C.ADDON_NAME and name ~= '!BaudErrorFrame' and name ~= 'REHack' and C_AddOns.GetAddOnEnableState(name, C.MY_NAME) == 2 then
+            C_AddOns.DisableAddOn(name, C.MY_NAME)
         end
     end
     _G.ReloadUI()
@@ -260,7 +260,7 @@ end)
 F:RegisterSlashCommand('/iteminfo', function(msg)
     local itemID = tonumber(msg)
     if itemID then
-        local name, link, rarity, level, minLevel, type, subType, _, _, _, _, classID, subClassID, bindType = GetItemInfo(itemID)
+        local name, link, rarity, level, minLevel, type, subType, _, _, _, _, classID, subClassID, bindType = C_Item.GetItemInfo(itemID)
         if name then
             F:Print(C.LINE_STRING)
             F:Print('Name ' .. C.INFO_COLOR .. name)
@@ -293,7 +293,7 @@ end)
 
 -- DBM test
 F:RegisterSlashCommand('/dbmtest', function()
-    if IsAddOnLoaded('DBM-Core') then
+    if C_AddOns.IsAddOnLoaded('DBM-Core') then
         _G.DBM:DemoMode()
     else
         F:Print(C.RED_COLOR .. 'DBM is not loaded.')

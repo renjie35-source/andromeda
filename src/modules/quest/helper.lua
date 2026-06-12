@@ -48,7 +48,7 @@ function QH:QuestTool_SetGlow(msg)
         for i = 1, 3 do
             local button = _G['ActionButton' .. i]
             local _, spellID = GetActionInfo(button.action)
-            local name = spellID and GetSpellInfo(spellID)
+            local name = spellID and F.GetSpellInfo(spellID)
             if fixedStrings[name] and isActionMatch(msg, fixedStrings[name]) or isActionMatch(msg, name) then
                 LBG.ShowOverlayGlow(button)
             else
@@ -117,7 +117,7 @@ function QH:OnLogin()
         if npcID == 174498 then
             C_GossipInfo.SelectOption(3)
         elseif npcID == 174371 then
-            if GetItemCount(183961) == 0 then
+            if C_Item.GetItemCount(183961) == 0 then
                 return
             end
             if C_GossipInfo.GetNumOptions() ~= 5 then

@@ -190,7 +190,7 @@ local function CreateClassColorButton()
 end
 
 function BLIZZARD:EnhancedColorPicker()
-    if IsAddOnLoaded('ColorPickerPlus') then
+    if C_AddOns.IsAddOnLoaded('ColorPickerPlus') then
         return
     end
 

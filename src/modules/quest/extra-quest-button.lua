@@ -159,7 +159,7 @@ local onAttributeChanged = [[
 
 function ExtraQuestButton:BAG_UPDATE_COOLDOWN()
     if self:IsShown() and self.itemID then
-        local start, duration = GetItemCooldown(self.itemID)
+        local start, duration = C_Item.GetItemCooldown(self.itemID)
         if duration > 0 then
             self.Cooldown:SetCooldown(start, duration)
             self.Cooldown:Show()
@@ -171,7 +171,7 @@ end
 
 function ExtraQuestButton:UpdateCount()
     if self:IsShown() then
-        local count = GetItemCount(self.itemLink)
+        local count = C_Item.GetItemCount(self.itemLink)
         self.Count:SetText(count and count > 1 and count or '')
     end
 end
@@ -293,8 +293,8 @@ ExtraQuestButton:SetScript('OnUpdate', function(self, elapsed)
             local HotKey = self.HotKey
             local Icon = self.Icon
 
-            -- BUG: IsItemInRange() is broken versus friendly npcs (and possibly others)
-            local inRange = IsItemInRange(self.itemLink, 'target')
+            -- BUG: C_Item.IsItemInRange() is broken versus friendly npcs (and possibly others)
+            local inRange = C_Item.IsItemInRange(self.itemLink, 'target')
             if HotKey:GetText() == _G.RANGE_INDICATOR then
                 if inRange == false then
                     HotKey:SetTextColor(1, 0.1, 0.1)
@@ -355,7 +355,7 @@ function ExtraQuestButton:SetItem(itemLink)
     end
 
     if itemLink then
-        self.Icon:SetTexture(GetItemIcon(itemLink))
+        self.Icon:SetTexture(C_Item.GetItemIconByID(itemLink))
         local itemID = GetItemInfoFromHyperlink(itemLink)
         self.itemID = itemID
         self.itemLink = itemLink
@@ -368,7 +368,7 @@ function ExtraQuestButton:SetItem(itemLink)
     if self.itemID then
         local HotKey = self.HotKey
         local key = GetBindingKey('EXTRAACTIONBUTTON1')
-        local hasRange = ItemHasRange(itemLink)
+        local hasRange = C_Item.ItemHasRange(itemLink)
         if key then
             HotKey:SetText(GetBindingText(key, 1))
             HotKey:Show()
@@ -412,7 +412,7 @@ local function GetQuestDistanceWithItem(questID)
     if not itemLink then
         return
     end
-    if GetItemCount(itemLink) == 0 then
+    if C_Item.GetItemCount(itemLink) == 0 then
         return
     end
     local itemID = GetItemInfoFromHyperlink(itemLink)

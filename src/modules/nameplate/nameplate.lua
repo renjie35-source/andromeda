@@ -409,7 +409,7 @@ function NAMEPLATE:RefreshMajorSpellsFilter()
     wipe(NAMEPLATE.MajorSpellsList)
 
     for spellID in pairs(C.MajorSpellsList) do
-        local name = GetSpellInfo(spellID)
+        local name = F.GetSpellInfo(spellID)
         if name then
             local modValue = _G.ANDROMEDA_ADB['MajorSpellsList'][spellID]
             if modValue == nil then
@@ -766,7 +766,7 @@ local function RefreshNameplateAuraFilter(list, key)
     wipe(NAMEPLATE[key])
 
     for spellID in pairs(list) do
-        local name = GetSpellInfo(spellID)
+        local name = F.GetSpellInfo(spellID)
         if name then
             if _G.ANDROMEDA_ADB[key][spellID] == nil then
                 NAMEPLATE[key][spellID] = true

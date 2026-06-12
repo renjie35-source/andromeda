@@ -38,9 +38,7 @@ function NOTIFICATION:VersionCheck_Init()
         local status = NOTIFICATION:VersionCheck_Compare(_G.ANDROMEDA_ADB.DetectVersion, C.ADDON_VERSION)
         if status == 'IsNew' then
             local ver = gsub(_G.ANDROMEDA_ADB.DetectVersion, '(%d+)$', '0')
-            NOTIFICATION:VersionCheck_Create(
-                format('%s has been out of date, the latest release is |cffff0000%s|r.', C.ADDON_NAME, ver)
-            )
+            NOTIFICATION:VersionCheck_Create(format('%s has been out of date, the latest release is |cffff0000%s|r.', C.ADDON_NAME, ver))
         elseif status == 'IsOld' then
             _G.ANDROMEDA_ADB.DetectVersion = C.ADDON_VERSION
         end

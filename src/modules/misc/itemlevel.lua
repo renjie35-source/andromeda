@@ -120,7 +120,7 @@ function IL:ItemLevel_UpdateTraits(button, id, link)
             local selected = C_AzeriteEmpoweredItem.IsPowerSelected(empoweredItemLocation, powerID)
             if selected then
                 local spellID = TT:Azerite_PowerToSpell(powerID)
-                local name, _, icon = GetSpellInfo(spellID)
+                local name, _, icon = F.GetSpellInfo(spellID)
                 local texture = button['textureIcon' .. i]
                 if name and texture then
                     texture:SetTexture(icon)
@@ -191,7 +191,7 @@ end
 
 function IL:ItemLevel_RefreshInfo(link, unit, index, slotFrame)
     C_Timer.After(0.1, function()
-        local quality = select(3, GetItemInfo(link))
+        local quality = select(3, C_Item.GetItemInfo(link))
         local info = F.GetItemLevel(link, unit, index, C.DB.General.GemEnchant)
         if info == 'tooSoon' then
             return
@@ -220,7 +220,7 @@ function IL:ItemLevel_SetupLevel(frame, strType, unit)
 
             local link = GetInventoryItemLink(unit, index)
             if link then
-                local quality = select(3, GetItemInfo(link))
+                local quality = select(3, C_Item.GetItemInfo(link))
                 local info = F.GetItemLevel(link, unit, index, C.DB.General.GemEnchant)
                 if info == 'tooSoon' then
                     IL:ItemLevel_RefreshInfo(link, unit, index, slotFrame)
@@ -344,7 +344,7 @@ function IL:ItemLevel_UpdateMerchant(link)
         local outline = _G.ANDROMEDA_ADB.FontOutline
         self.iLvl = F.CreateFS(_G[self:GetName() .. 'ItemButton'], C.Assets.Fonts.Bold, 11, outline or nil, '', nil, outline and 'NONE' or 'THICK', 'BOTTOMRIGHT', -1, 1)
     end
-    local quality = link and select(3, GetItemInfo(link)) or nil
+    local quality = link and select(3, C_Item.GetItemInfo(link)) or nil
     if quality and quality > 1 then
         local level = F.GetItemLevel(link)
         local color = C.QualityColors[quality]

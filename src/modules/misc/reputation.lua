@@ -8,12 +8,7 @@ local extraRep = {}
 
 local repMsg = '%s (%d/%d): %+d ' .. L['Reputation']
 local paraMsg = C.GREEN_COLOR .. '%s (%d/10000): %+d ' .. L['Paragon Reputation'] .. '|r'
-local cacheMsg = C.RED_COLOR
-    .. '%s (%d/10000): %+d '
-    .. L['Paragon Reputation']
-    .. ' ('
-    .. L['Max Reputation - Receive Reward.']
-    .. ')|r'
+local cacheMsg = C.RED_COLOR .. '%s (%d/10000): %+d ' .. L['Paragon Reputation'] .. ' (' .. L['Max Reputation - Receive Reward.'] .. ')|r'
 
 local function CreateMessage(msg)
     local info = _G.ChatTypeInfo['COMBAT_FACTION_CHANGE']
@@ -96,9 +91,7 @@ local function HookParagonRep()
         if factionIndex <= numFactions then
             local name, _, _, _, _, _, _, _, _, _, _, _, _, factionID = GetFactionInfo(factionIndex)
             if factionID and C_Reputation.IsFactionParagon(factionID) then
-                local currentValue, threshold, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(
-                    factionID
-                )
+                local currentValue, threshold, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(factionID)
                 factionRow.questID = rewardQuestID
                 local r, g, b = 0.9, 0.8, 0.6
 
@@ -117,8 +110,7 @@ local function HookParagonRep()
                     factionBar:SetMinMaxValues(0, threshold)
                     factionBar:SetValue(barValue)
                     factionBar:SetStatusBarColor(r, g, b)
-                    factionRow.rolloverText = C.INFO_COLOR
-                        .. format(_G.REPUTATION_PROGRESS_FORMAT, barValue, threshold)
+                    factionRow.rolloverText = C.INFO_COLOR .. format(_G.REPUTATION_PROGRESS_FORMAT, barValue, threshold)
 
                     if hasRewardPending then
                         barValue = barValue - threshold

@@ -147,11 +147,7 @@ function M:HandleAddonMessage(...)
         end
     elseif prefix == MRT_Prefix then
         local modPrefix, subPrefix, soulbinds = strsplit('\t', msg)
-        if
-            (modPrefix and modPrefix == 'inspect')
-            and (subPrefix and subPrefix == 'R')
-            and (soulbinds and strsub(soulbinds, 1, 1) == 'S')
-        then
+        if (modPrefix and modPrefix == 'inspect') and (subPrefix and subPrefix == 'R') and (soulbinds and strsub(soulbinds, 1, 1) == 'S') then
             local guid = UnitGUID(sender)
             local covenantID = select(2, strsplit(':', soulbinds))
             covenantID = tonumber(covenantID)
@@ -183,20 +179,13 @@ function M:AddCovenantInfo()
     end
 
     if covenantID and covenantID ~= 0 then
-        _G.GameTooltip:AddLine(
-            format(
-                '%s %s %s',
-                C.WHITE_COLOR .. L['Covenant'] .. ':|r',
-                M:GetCovenantName(covenantID),
-                M:GetCovenantIcon(covenantID)
-            )
-        )
+        _G.GameTooltip:AddLine(format('%s %s %s', C.WHITE_COLOR .. L['Covenant'] .. ':|r', M:GetCovenantName(covenantID), M:GetCovenantIcon(covenantID)))
     end
 end
 
 function M:CovenantInfo()
     LibOR = _G.LibStub and _G.LibStub('LibOpenRaid-1.0', true)
-    DCLoaded = IsAddOnLoaded('Details_Covenants')
+    DCLoaded = C_AddOns.IsAddOnLoaded('Details_Covenants')
 
     for prefix in pairs(addonPrefixes) do
         C_ChatInfo.RegisterAddonMessagePrefix(prefix)

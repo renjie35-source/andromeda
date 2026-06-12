@@ -94,17 +94,8 @@ function MAP:MapData_RefreshOverlays(fullUpdate)
                     end
                     texture:SetWidth(texturePixelWidth)
                     texture:SetHeight(texturePixelHeight)
-                    texture:SetTexCoord(
-                        0,
-                        texturePixelWidth / textureFileWidth,
-                        0,
-                        texturePixelHeight / textureFileHeight
-                    )
-                    texture:SetPoint(
-                        'TOPLEFT',
-                        offsetX + (TILE_SIZE_WIDTH * (k - 1)),
-                        -(offsetY + (TILE_SIZE_HEIGHT * (j - 1)))
-                    )
+                    texture:SetTexCoord(0, texturePixelWidth / textureFileWidth, 0, texturePixelHeight / textureFileHeight)
+                    texture:SetPoint('TOPLEFT', offsetX + (TILE_SIZE_WIDTH * (k - 1)), -(offsetY + (TILE_SIZE_HEIGHT * (j - 1))))
                     texture:SetTexture(fileDataIDs[((j - 1) * numTexturesWide) + k], nil, nil, 'TRILINEAR')
 
                     if C.DB.Map.MapReveal then

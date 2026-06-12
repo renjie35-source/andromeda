@@ -19,8 +19,7 @@
 	class-generation, helper-functions and the Blizzard-replacement.
 ]]
 local parent, ns = ...
-local getAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata -- isPatch10_1
-local global = getAddOnMetadata(parent, 'X-cargBags')
+local global = C_AddOns.GetAddOnMetadata(parent, 'X-cargBags')
 
 --- @class table
 --  @name cargBags
@@ -192,4 +191,3 @@ local m_item = {__index = function(i,k) return cargBags.itemKeys[k] and cargBags
 function cargBags:NewItemTable()
 	return setmetatable({}, m_item)
 end
-

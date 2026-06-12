@@ -55,7 +55,7 @@ do
             return
         end
 
-        local maxStack = select(8, GetItemInfo(itemLink))
+        local maxStack = select(8, C_Item.GetItemInfo(itemLink))
         if maxStack and maxStack > 1 then
             local numAvailable = select(5, GetMerchantItemInfo(id))
             if numAvailable > -1 then

@@ -1034,7 +1034,7 @@ C.Themes['Blizzard_GarrisonUI'] = function()
     end
 
     -- WarPlan
-    if IsAddOnLoaded('WarPlan') then
+    if C_AddOns.IsAddOnLoaded('WarPlan') then
         local function reskinWarPlanMissions(self)
             local missions = self.TaskBoard.Missions
             for i = 1, #missions do
@@ -1086,11 +1086,11 @@ C.Themes['Blizzard_GarrisonUI'] = function()
     end
 
     -- VenturePlan, 4.30 and higher
-    if IsAddOnLoaded('VenturePlan') then
+    if C_AddOns.IsAddOnLoaded('VenturePlan') then
         local ANIMA_TEXTURE = 3528288
         local ANIMA_SPELLID = { [347555] = 3, [345706] = 5, [336327] = 35, [336456] = 250 }
         local function GetAnimaMultiplier(itemID)
-            local _, spellID = GetItemSpell(itemID)
+            local _, spellID = C_Item.GetItemSpell(itemID)
             return ANIMA_SPELLID[spellID]
         end
         local function SetAnimaActualCount(self, text)

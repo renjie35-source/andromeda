@@ -20,12 +20,5 @@ function UNITFRAME:SpawnTargetTarget()
     oUF:SetActiveStyle('TargetTarget')
 
     local targettarget = oUF:Spawn('targettarget', 'oUF_TargetTarget')
-    F.Mover(
-        targettarget,
-        L['ToTFrame'],
-        'ToTFrame',
-        UNITFRAME.Positions.tot,
-        targettarget:GetWidth(),
-        targettarget:GetHeight()
-    )
+    F.Mover(targettarget, L['ToTFrame'], 'ToTFrame', UNITFRAME.Positions.tot, targettarget:GetWidth(), targettarget:GetHeight())
 end

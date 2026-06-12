@@ -30,11 +30,11 @@ local function addLinesForItem(self)
         return
     end
 
-    local bagCount = GetItemCount(link)
-    local bankCount = GetItemCount(link, true) - bagCount
-    local itemStackCount = select(8, GetItemInfo(link))
-    local itemSellPrice = select(11, GetItemInfo(link))
-    local expacID = select(15, GetItemInfo(link))
+    local bagCount = C_Item.GetItemCount(link)
+    local bankCount = C_Item.GetItemCount(link, true) - bagCount
+    local itemStackCount = select(8, C_Item.GetItemInfo(link))
+    local itemSellPrice = select(11, C_Item.GetItemInfo(link))
+    local expacID = select(15, C_Item.GetItemInfo(link))
 
     if bankCount > 0 then
         self:AddDoubleLine(_G.BAGSLOT .. '/' .. _G.BANK .. ':', bagCount .. '/' .. bankCount, 0.5, 0.8, 1, 1, 1, 1)

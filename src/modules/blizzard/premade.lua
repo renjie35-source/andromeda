@@ -265,7 +265,7 @@ function BLIZZARD:AddAutoAcceptButton()
 end
 
 function BLIZZARD:ReplaceFindGroupButton()
-    if not IsAddOnLoaded('PremadeGroupsFilter') then
+    if not C_AddOns.IsAddOnLoaded('PremadeGroupsFilter') then
         return
     end
 
@@ -416,7 +416,7 @@ local function CreateSortButton(parent, texture, sortStr)
 end
 
 function BLIZZARD:AddPGFSortingExpression()
-    if not IsAddOnLoaded('PremadeGroupsFilter') then
+    if not C_AddOns.IsAddOnLoaded('PremadeGroupsFilter') then
         return
     end
 
@@ -449,7 +449,7 @@ end
 -- Credit: PremadeGroupsFilter
 
 function BLIZZARD:FixListingTaint()
-    if IsAddOnLoaded('PremadeGroupsFilter') then
+    if C_AddOns.IsAddOnLoaded('PremadeGroupsFilter') then
         return
     end
 

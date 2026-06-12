@@ -81,16 +81,7 @@ function BLIZZARD:OrderHall_OnEnter()
         end
         local category = self.Category[i]
         if category then
-            _G.GameTooltip:AddDoubleLine(
-                getIconString(category.icon) .. category.name,
-                category.count .. '/' .. category.limit,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1
-            )
+            _G.GameTooltip:AddDoubleLine(getIconString(category.icon) .. category.name, category.count .. '/' .. category.limit, 1, 1, 1, 1, 1, 1)
             if IsShiftKeyDown() then
                 _G.GameTooltip:AddLine(category.description, 0.6, 0.8, 1, 1)
             end
@@ -121,7 +112,7 @@ function BLIZZARD:OrderHall_OnInit()
         return
     end
 
-    if IsAddOnLoaded('Blizzard_OrderHallUI') then
+    if C_AddOns.IsAddOnLoaded('Blizzard_OrderHallUI') then
         BLIZZARD:OrderHall_CreateIcon()
     else
         F:RegisterEvent('ADDON_LOADED', BLIZZARD.OrderHall_OnLoad)

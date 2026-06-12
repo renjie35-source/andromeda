@@ -67,7 +67,7 @@ C.Themes['Blizzard_TalentUI'] = function()
 
         for i = 1, 4 do
             local bu = frame['specButton' .. i]
-            local _, _, _, icon, role = GetSpecializationInfo(i, false, frame.isPet)
+            local _, _, _, icon, role = C_SpecializationInfo.GetSpecializationInfo(i, false, frame.isPet)
             F.StripTextures(bu)
             F.ReskinButton(bu)
 
@@ -98,11 +98,11 @@ C.Themes['Blizzard_TalentUI'] = function()
     end
 
     hooksecurefunc('PlayerTalentFrame_UpdateSpecFrame', function(self, spec)
-        local playerTalentSpec = GetSpecialization(nil, self.isPet, 1)
+        local playerTalentSpec = C_SpecializationInfo.GetSpecialization(nil, self.isPet, 1)
         local shownSpec = spec or playerTalentSpec or 1
         local numSpecs = GetNumSpecializations(nil, self.isPet)
         local sex = self.isPet and UnitSex('pet') or UnitSex('player')
-        local id, _, _, icon, role = GetSpecializationInfo(shownSpec, nil, self.isPet, nil, sex)
+        local id, _, _, icon, role = C_SpecializationInfo.GetSpecializationInfo(shownSpec, nil, self.isPet, nil, sex)
 
         if not id then
             return
@@ -127,7 +127,7 @@ C.Themes['Blizzard_TalentUI'] = function()
         if bonuses then
             for i = 1, #bonuses, bonusesIncrement do
                 local frame = scrollChild['abilityButton' .. index]
-                local _, icon = GetSpellTexture(bonuses[i])
+                local icon = F.GetSpellTexture(bonuses[i])
                 frame.icon:SetTexture(icon)
                 frame.subText:SetTextColor(0.75, 0.75, 0.75)
 
@@ -181,11 +181,11 @@ C.Themes['Blizzard_TalentUI'] = function()
     hooksecurefunc('TalentFrame_Update', function()
         for i = 1, _G.MAX_TALENT_TIERS do
             for j = 1, _G.NUM_TALENT_COLUMNS do
-                local _, _, _, selected, _, _, _, _, _, _, known = GetTalentInfo(i, j, 1)
+                local info = C_SpecializationInfo.GetTalentInfo({ tier = i, column = j, groupIndex = 1 })
                 local bu = _G['PlayerTalentFrameTalentsTalentRow' .. i .. 'Talent' .. j]
-                if known then
+                if info and info.known then
                     bu.bg:SetBackdropColor(r, g, b, 0.6)
-                elseif selected then
+                elseif info and info.selected then
                     bu.bg:SetBackdropColor(r, g, b, 0.25)
                 else
                     bu.bg:SetBackdropColor(0, 0, 0, 0.25)

@@ -78,12 +78,7 @@ function COMBAT:EasyMark()
 
     _G.WorldFrame:HookScript('OnMouseDown', function(_, btn)
         if btn == 'LeftButton' and getModifiedKey() and UnitExists('mouseover') then
-            if
-                not IsInGroup()
-                or (IsInGroup() and not IsInRaid())
-                or UnitIsGroupLeader('player')
-                or UnitIsGroupAssistant('player')
-            then
+            if not IsInGroup() or (IsInGroup() and not IsInRaid()) or UnitIsGroupLeader('player') or UnitIsGroupAssistant('player') then
                 local ricon = GetRaidTargetIndex('mouseover')
                 for i = 1, 8 do
                     if ricon == i then

@@ -178,7 +178,8 @@ function M:Bar_OnEnter()
             standingtext = _G.RENOWN_LEVEL_LABEL .. majorFactionData.renownLevel
         else
             local repInfo = C_GossipInfo.GetFriendshipReputation(factionID)
-            local friendID, friendRep, friendThreshold, nextFriendThreshold, friendTextLevel = repInfo.friendshipFactionID, repInfo.standing, repInfo.reactionThreshold, repInfo.nextThreshold, repInfo.text
+            local friendID, friendRep, friendThreshold, nextFriendThreshold, friendTextLevel =
+                repInfo.friendshipFactionID, repInfo.standing, repInfo.reactionThreshold, repInfo.nextThreshold, repInfo.text
             local repRankInfo = C_GossipInfo.GetFriendshipReputationRanks(factionID)
             local currentRank, maxRank = repRankInfo.currentLevel, repRankInfo.maxLevel
             if friendID and friendID ~= 0 then
@@ -202,13 +203,31 @@ function M:Bar_OnEnter()
         end
         _G.GameTooltip:AddLine(' ')
         _G.GameTooltip:AddLine(name, 0, 0.6, 1)
-        _G.GameTooltip:AddDoubleLine(standingtext, value - barMin .. ' / ' .. barMax - barMin .. ' (' .. floor((value - barMin) / (barMax - barMin) * 100) .. '%)', 0.6, 0.8, 1, 1, 1, 1)
+        _G.GameTooltip:AddDoubleLine(
+            standingtext,
+            value - barMin .. ' / ' .. barMax - barMin .. ' (' .. floor((value - barMin) / (barMax - barMin) * 100) .. '%)',
+            0.6,
+            0.8,
+            1,
+            1,
+            1,
+            1
+        )
 
         if C_Reputation.IsFactionParagon(factionID) then
             local currentValue, threshold = C_Reputation.GetFactionParagonInfo(factionID)
             local paraCount = floor(currentValue / threshold)
             currentValue = mod(currentValue, threshold)
-            _G.GameTooltip:AddDoubleLine(L['Paragon'] .. paraCount, currentValue .. ' / ' .. threshold .. ' (' .. floor(currentValue / threshold * 100) .. '%)', 0.6, 0.8, 1, 1, 1, 1)
+            _G.GameTooltip:AddDoubleLine(
+                L['Paragon'] .. paraCount,
+                currentValue .. ' / ' .. threshold .. ' (' .. floor(currentValue / threshold * 100) .. '%)',
+                0.6,
+                0.8,
+                1,
+                1,
+                1,
+                1
+            )
         end
 
         if factionID == 2465 then -- 荒猎团
@@ -239,7 +258,16 @@ function M:Bar_OnEnter()
         azeriteItem:ContinueWithCancelOnItemLoad(function()
             _G.GameTooltip:AddLine(' ')
             _G.GameTooltip:AddLine(azeriteItem:GetItemName() .. ' (' .. format(_G.SPELLBOOK_AVAILABLE_AT, currentLevel) .. ')', 0, 0.6, 1)
-            _G.GameTooltip:AddDoubleLine(_G.ARTIFACT_POWER, BreakUpLargeNumbers(xp) .. ' / ' .. BreakUpLargeNumbers(totalLevelXP) .. ' (' .. floor(xp / totalLevelXP * 100) .. '%)', 0.6, 0.8, 1, 1, 1, 1)
+            _G.GameTooltip:AddDoubleLine(
+                _G.ARTIFACT_POWER,
+                BreakUpLargeNumbers(xp) .. ' / ' .. BreakUpLargeNumbers(totalLevelXP) .. ' (' .. floor(xp / totalLevelXP * 100) .. '%)',
+                0.6,
+                0.8,
+                1,
+                1,
+                1,
+                1
+            )
         end)
     end
 

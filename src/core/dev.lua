@@ -54,14 +54,14 @@ function F:ThrowError(...)
 end
 
 function F:Dump(object, inspect)
-    if GetAddOnEnableState(C.MY_NAME, 'Blizzard_DebugTools') == 0 then
+    if C_AddOns.GetAddOnEnableState('Blizzard_DebugTools', C.MY_NAME) == 0 then
         F:Print('Blizzard_DebugTools is disabled.')
         return
     end
 
-    local debugTools = IsAddOnLoaded('Blizzard_DebugTools')
+    local debugTools = C_AddOns.IsAddOnLoaded('Blizzard_DebugTools')
     if not debugTools then
-        UIParentLoadAddOn('Blizzard_DebugTools')
+        C_AddOns.LoadAddOn('Blizzard_DebugTools')
     end
 
     if inspect then

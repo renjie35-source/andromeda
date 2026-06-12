@@ -36,7 +36,7 @@ local function refreshDefaultLootSpec()
         return
     end
     local mult = 3 + numSpecs
-    newMenu[numLocal - mult].text = format(_G.LOOT_SPECIALIZATION_DEFAULT, select(2, GetSpecializationInfo(currentSpecIndex)))
+    newMenu[numLocal - mult].text = format(_G.LOOT_SPECIALIZATION_DEFAULT, select(2, C_SpecializationInfo.GetSpecializationInfo(currentSpecIndex)))
 end
 
 local function selectCurrentConfig(_, configID, specID)
@@ -52,7 +52,7 @@ local function selectCurrentConfig(_, configID, specID)
         C_ClassTalents.SetStarterBuildActive(false)
     end
 
-    C_ClassTalents.UpdateLastSelectedSavedConfigID(specID or GetSpecializationInfo(currentSpecIndex), configID)
+    C_ClassTalents.UpdateLastSelectedSavedConfigID(specID or C_SpecializationInfo.GetSpecializationInfo(currentSpecIndex), configID)
 end
 
 local function checkCurrentConfig(self)
@@ -61,7 +61,7 @@ end
 
 local function refreshAllTraits()
     local numConfig = numLocal or 0
-    local specID = GetSpecializationInfo(currentSpecIndex)
+    local specID = C_SpecializationInfo.GetSpecializationInfo(currentSpecIndex)
     local configIDs = specID and C_ClassTalents.GetConfigIDsBySpecID(specID)
     if configIDs then
         for i = 1, #configIDs do
@@ -118,7 +118,7 @@ local function BuildSpecMenu()
     }
 
     for i = 1, 4 do
-        local id, name = GetSpecializationInfo(i)
+        local id, name = C_SpecializationInfo.GetSpecializationInfo(i)
         if id then
             numSpecs = (numSpecs or 0) + 1
             tinsert(newMenu, i + 1, { text = name, arg1 = i, func = selectSpec, checked = checkSpec })
@@ -127,7 +127,7 @@ local function BuildSpecMenu()
     end
 
     tinsert(newMenu, seperatorMenu)
-    tinsert(newMenu, { text = GetSpellInfo(384255), isTitle = true, notCheckable = true })
+    tinsert(newMenu, { text = F.GetSpellInfo(384255), isTitle = true, notCheckable = true })
     tinsert(newMenu, {
         text = _G.BLUE_FONT_COLOR:WrapTextInColorCode(_G.TALENT_FRAME_DROP_DOWN_STARTER_BUILD),
         func = selectCurrentConfig,
@@ -163,13 +163,13 @@ local function Block_OnMouseUp(self, btn)
 end
 
 local function Block_OnEvent(self)
-    --local currentSpec = GetSpecialization()
+    --local currentSpec = C_SpecializationInfo.GetSpecialization()
 
-    currentSpecIndex = GetSpecialization()
+    currentSpecIndex = C_SpecializationInfo.GetSpecialization()
     currentLootIndex = GetLootSpecialization()
 
     if currentSpecIndex and currentSpecIndex < 5 then
-        local _, name = GetSpecializationInfo(currentSpecIndex)
+        local _, name = C_SpecializationInfo.GetSpecializationInfo(currentSpecIndex)
 
         if not name then
             return
@@ -197,14 +197,14 @@ local function Block_OnEnter(self)
     _G.GameTooltip:AddLine(_G.TALENTS_BUTTON, 0.9, 0.8, 0.6)
     _G.GameTooltip:AddLine(' ')
 
-    local specID, specName, _, specIcon = GetSpecializationInfo(currentSpecIndex)
+    local specID, specName, _, specIcon = C_SpecializationInfo.GetSpecializationInfo(currentSpecIndex)
     _G.GameTooltip:AddLine(addIcon(specIcon) .. ' ' .. specName, 0.6, 0.8, 1)
 
     for t = 1, _G.MAX_TALENT_TIERS do
         for c = 1, 3 do
-            local _, name, icon, selected = GetTalentInfo(t, c, 1)
-            if selected then
-                _G.GameTooltip:AddLine(addIcon(icon) .. ' ' .. name, 1, 1, 1)
+            local info = C_SpecializationInfo.GetTalentInfo({ tier = t, column = c, groupIndex = 1 })
+            if info and info.selected then
+                _G.GameTooltip:AddLine(addIcon(info.icon) .. ' ' .. info.name, 1, 1, 1)
             end
         end
     end

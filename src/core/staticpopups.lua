@@ -240,13 +240,7 @@ StaticPopupDialogs.ANDROMEDA_DELETE_UNIT_PROFILE = {
         else
             r, g, b = F:ClassColor(class)
         end
-        self.text:SetText(
-            format(
-                C.RED_COLOR .. L['Are you sure to delete %s%s|r profile?'],
-                F:RgbToHex(r, g, b),
-                self.text.text_arg1
-            )
-        )
+        self.text:SetText(format(C.RED_COLOR .. L['Are you sure to delete %s%s|r profile?'], F:RgbToHex(r, g, b), self.text.text_arg1))
     end,
     timeout = 0,
     whileDead = 1,

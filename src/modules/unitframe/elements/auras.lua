@@ -383,9 +383,18 @@ do
     end
 
     local function UpdatePlayerAuraPosition(self)
-        local specIndex = GetSpecialization()
+        local specIndex = C_SpecializationInfo.GetSpecialization()
 
-        if (C.MY_CLASS == 'ROGUE' or C.MY_CLASS == 'PALADIN' or C.MY_CLASS == 'WARLOCK' or (C.MY_CLASS == 'DRUID' and specIndex == 2) or (C.MY_CLASS == 'MONK' and specIndex == 3) or (C.MY_CLASS == 'MAGE' and specIndex == 1)) and C.DB.Unitframe.ClassPower then
+        if
+            (
+                C.MY_CLASS == 'ROGUE'
+                or C.MY_CLASS == 'PALADIN'
+                or C.MY_CLASS == 'WARLOCK'
+                or (C.MY_CLASS == 'DRUID' and specIndex == 2)
+                or (C.MY_CLASS == 'MONK' and specIndex == 3)
+                or (C.MY_CLASS == 'MAGE' and specIndex == 1)
+            ) and C.DB.Unitframe.ClassPower
+        then
             self.Auras:ClearAllPoints()
             self.Auras:SetPoint('TOP', self.ClassPowerBar, 'BOTTOM', 0, -5)
         else
@@ -514,9 +523,6 @@ do
     end
 end
 
-
-
-
 -- Debuffs on party/raid frames
 
 do
@@ -536,7 +542,7 @@ do
         wipe(UNITFRAME.RaidDebuffsBlackList)
 
         for spellID in pairs(C.RaidDebuffsBlackList) do
-            local name = GetSpellInfo(spellID)
+            local name = F.GetSpellInfo(spellID)
             if name then
                 if _G.ANDROMEDA_ADB['RaidDebuffsBlackList'][spellID] == nil then
                     UNITFRAME.RaidDebuffsBlackList[spellID] = true
@@ -688,7 +694,7 @@ do
         wipe(UNITFRAME.RaidBuffsWhiteList)
 
         for spellID in pairs(C.RaidBuffsWhiteList) do
-            local name = GetSpellInfo(spellID)
+            local name = F.GetSpellInfo(spellID)
             if name then
                 if _G.ANDROMEDA_ADB['RaidBuffsWhiteList'][spellID] == nil then
                     UNITFRAME.RaidBuffsWhiteList[spellID] = true

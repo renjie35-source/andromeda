@@ -23,7 +23,7 @@ function MAP:RemoveBlizzStuff()
     F.HideObject(MinimapCompassTexture)
 
     -- ClockFrame
-    LoadAddOn('Blizzard_TimeManager')
+    C_AddOns.LoadAddOn('Blizzard_TimeManager')
     local region = TimeManagerClockButton:GetRegions()
     region:Hide()
     TimeManagerClockButton:Hide()

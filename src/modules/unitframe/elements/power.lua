@@ -63,7 +63,7 @@ local function updatePowerColorBySpell(power, unit)
         return
     end
 
-    local spec = GetSpecialization() or 0
+    local spec = C_SpecializationInfo.GetSpecialization() or 0
     local isBlood = C.MY_CLASS == 'DEATHKNIGHT' and spec == 1
     local isFrost = C.MY_CLASS == 'DEATHKNIGHT' and spec == 2
     local isHavoc = C.MY_CLASS == 'DEMONHUNTER' and spec == 1

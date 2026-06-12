@@ -108,7 +108,7 @@ end
 
 function AURA:UpdateAuras(button, index)
     local unit, filter = button.header:GetAttribute('unit'), button.filter
-    local name, texture, count, debuffType, duration, expirationTime, _, _, _, spellID = UnitAura(unit, index, filter)
+    local name, texture, count, debuffType, duration, expirationTime, _, _, _, spellID = F.UnitAura(unit, index, filter)
     if not name then
         return
     end

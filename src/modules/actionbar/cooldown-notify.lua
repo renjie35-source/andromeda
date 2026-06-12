@@ -31,7 +31,7 @@ function ACTIONBAR:SendCurrentSpell(thisTime, spellID)
             SendChatMessage(format(L['%s %s/%s all charges ready.'], spellLink, charges, maxCharges), 'PARTY')
         end
     else
-        local start, duration = GetSpellCooldown(spellID)
+        local start, duration = F.GetSpellCooldown(spellID)
         if start and duration > 0 then
             local remain = start + duration - thisTime
             SendChatMessage(format(L['%s cooldown remaining %s.'], spellLink, GetRemainTime(remain)), 'PARTY')
@@ -42,7 +42,7 @@ function ACTIONBAR:SendCurrentSpell(thisTime, spellID)
 end
 
 function ACTIONBAR:SendCurrentItem(thisTime, itemID, itemLink)
-    local start, duration = GetItemCooldown(itemID)
+    local start, duration = C_Item.GetItemCooldown(itemID)
     if start and duration > 0 then
         local remain = start + duration - thisTime
         SendNotifyMessage(format(L['%s cooldown remaining %s.'], itemLink, GetRemainTime(remain)))
@@ -72,7 +72,7 @@ function ACTIONBAR:AnalyzeButtonCooldown()
     if spellType == 'spell' then
         ACTIONBAR:SendCurrentSpell(thisTime, id)
     elseif spellType == 'item' then
-        local itemName, itemLink = GetItemInfo(id)
+        local itemName, itemLink = C_Item.GetItemInfo(id)
         ACTIONBAR:SendCurrentItem(thisTime, id, itemLink or itemName)
     elseif spellType == 'macro' then
         local spellID = GetMacroSpell(id)

@@ -146,10 +146,7 @@ local _tags = {
         local isTapped = UnitIsTapDenied(unit)
         local isDead = UnitIsDeadOrGhost(unit)
 
-        if
-            (unit == 'targettarget' and UnitIsUnit('targettarget', 'player'))
-            or (unit == 'focustarget' and UnitIsUnit('focustarget', 'player'))
-        then
+        if (unit == 'targettarget' and UnitIsUnit('targettarget', 'player')) or (unit == 'focustarget' and UnitIsUnit('focustarget', 'player')) then
             return F:RgbToHex(1, 0, 0)
         elseif isTapped or isOffline then
             return F:RgbToHex(colors.tapped)
@@ -264,8 +261,6 @@ function UNITFRAME:CreateNameTag(self)
     self.NameTag = text
 end
 
-
-
 function UNITFRAME:CreateHealthTag(self)
     local font = C.Assets.Fonts.Condensed
     local style = self.unitStyle
@@ -358,8 +353,6 @@ function UNITFRAME:CreatePlayerTags(self)
 
     UpdatePlayerTags(self)
 end
-
-
 
 function UNITFRAME:UpdateUnitTags()
     for _, frame in pairs(oUF.objects) do

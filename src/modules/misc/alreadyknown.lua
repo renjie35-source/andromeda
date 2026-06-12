@@ -31,7 +31,7 @@ local function IsAlreadyKnown(link, index)
     if linkType == 'battlepet' then
         return isPetCollected(linkID)
     elseif linkType == 'item' then
-        local name, _, _, level, _, _, _, _, _, _, _, itemClassID = GetItemInfo(link)
+        local name, _, _, level, _, _, _, _, _, _, _, itemClassID = C_Item.GetItemInfo(link)
         if not name then
             return
         end

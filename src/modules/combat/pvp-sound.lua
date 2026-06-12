@@ -16,12 +16,8 @@ local FILTER_MY_PETS = _G.bit.bor(
     _G.COMBATLOG_OBJECT_TYPE_PET
 )
 
-local FILTER_ENEMY_PLAYERS = _G.bit.bor(
-    _G.COMBATLOG_OBJECT_AFFILIATION_MASK,
-    _G.COMBATLOG_OBJECT_REACTION_MASK,
-    _G.COMBATLOG_OBJECT_CONTROL_PLAYER,
-    _G.COMBATLOG_OBJECT_TYPE_PLAYER
-)
+local FILTER_ENEMY_PLAYERS =
+    _G.bit.bor(_G.COMBATLOG_OBJECT_AFFILIATION_MASK, _G.COMBATLOG_OBJECT_REACTION_MASK, _G.COMBATLOG_OBJECT_CONTROL_PLAYER, _G.COMBATLOG_OBJECT_TYPE_PLAYER)
 
 local FILTER_ENEMY_NPC = _G.bit.bor(
     _G.COMBATLOG_OBJECT_AFFILIATION_MASK,
@@ -69,9 +65,7 @@ local function resetAll()
     streakCount = 0
 end
 
-local function updateMode()
-
-end
+local function updateMode() end
 
 local function onEvent()
     local timestamp, type, _, sourceGUID, sourceName, sourceFlags, _, destGUID, destName, destFlags, _, _, swingOverkill, _, _, spellOverkill = CombatLogGetCurrentEventInfo()
@@ -158,10 +152,7 @@ local function onEvent()
         lastKill = timestamp
     elseif
         (type == 'SWING_DAMAGE' and fromEnemy and destGUID == playerGUID and swingOverkill >= 0)
-        or ((type == 'RANGE_DAMAGE' or type == 'SPELL_DAMAGE' or type == 'SPELL_PERIODIC_DAMAGE')
-        and fromEnemy
-        and destGUID == playerGUID
-        and spellOverkill >= 0)
+        or ((type == 'RANGE_DAMAGE' or type == 'SPELL_DAMAGE' or type == 'SPELL_PERIODIC_DAMAGE') and fromEnemy and destGUID == playerGUID and spellOverkill >= 0)
     then
         if sourceName ~= nil and sourceName ~= playerName then
             if deathsTable[sourceName] and (timestamp - deathsTable[sourceName]) < 5 then

@@ -203,7 +203,7 @@ function TOOLTIP:GetUnitItemLevel(unit)
                 if not itemLink then
                     delay = true
                 else
-                    local _, _, quality, level, _, _, _, _, slot = GetItemInfo(itemLink)
+                    local _, _, quality, level, _, _, _, _, slot = C_Item.GetItemInfo(itemLink)
                     if not quality or not level then
                         delay = true
                     else
@@ -224,7 +224,7 @@ function TOOLTIP:GetUnitItemLevel(unit)
                                 local relics = { select(4, strsplit(':', itemLink)) }
                                 for i = 1, 3 do
                                     local relicID = relics[i] ~= '' and relics[i]
-                                    local relicLink = select(2, GetItemGem(itemLink, i))
+                                    local relicLink = select(2, C_Item.GetItemGem(itemLink, i))
                                     if relicID and not relicLink then
                                         delay = true
                                         break
@@ -304,9 +304,9 @@ function TOOLTIP:GetUnitSpec(unit)
 
     local specName
     if unit == 'player' then
-        local specIndex = GetSpecialization()
+        local specIndex = C_SpecializationInfo.GetSpecialization()
         if specIndex then
-            specName = select(2, GetSpecializationInfo(specIndex))
+            specName = select(2, C_SpecializationInfo.GetSpecializationInfo(specIndex))
         end
     else
         local specID = GetInspectSpecialization(unit)

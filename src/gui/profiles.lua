@@ -135,23 +135,11 @@ function GUI:CreateProfileBar(parent, index)
         'BLUE'
     )
 
-    local reset = GUI:CreateProfileIcon(
-        bar,
-        1,
-        'Atlas:transmog-icon-revert',
-        L['Reset profile'],
-        L['Reset your current profile, and load default settings. Requires UI reload.']
-    )
+    local reset = GUI:CreateProfileIcon(bar, 1, 'Atlas:transmog-icon-revert', L['Reset profile'], L['Reset your current profile, and load default settings. Requires UI reload.'])
     reset:SetScript('OnClick', GUI.Reset_OnClick)
     bar.reset = reset
 
-    local apply = GUI:CreateProfileIcon(
-        bar,
-        2,
-        'Interface\\RAIDFRAME\\ReadyCheck-Ready',
-        L['Select profile'],
-        L['Switch to the selected profile, requires UI reload.']
-    )
+    local apply = GUI:CreateProfileIcon(bar, 2, 'Interface\\RAIDFRAME\\ReadyCheck-Ready', L['Select profile'], L['Switch to the selected profile, requires UI reload.'])
     apply:SetScript('OnClick', GUI.Apply_OnClick)
     bar.apply = apply
 
@@ -166,13 +154,7 @@ function GUI:CreateProfileBar(parent, index)
     download:SetScript('OnClick', GUI.Download_OnClick)
     bar.download = download
 
-    local upload = GUI:CreateProfileIcon(
-        bar,
-        4,
-        'Atlas:bags-icon-addslots',
-        L['Replace selected profile'],
-        L['Replace the selected profile with the current using one.']
-    )
+    local upload = GUI:CreateProfileIcon(bar, 4, 'Atlas:bags-icon-addslots', L['Replace selected profile'], L['Replace the selected profile with the current using one.'])
     upload.Icon:SetInside(nil, 6, 6)
     upload:SetScript('OnClick', GUI.Upload_OnClick)
     bar.upload = upload
@@ -217,10 +199,7 @@ function GUI:Delete_OnEnter()
         self:SetText(text)
     end
 
-    if
-        _G.ANDROMEDA_ADB['ProfileIndex'][text]
-        or (_G.ANDROMEDA_ADB['GoldStatistic'][realm] and _G.ANDROMEDA_ADB['GoldStatistic'][realm][name])
-    then
+    if _G.ANDROMEDA_ADB['ProfileIndex'][text] or (_G.ANDROMEDA_ADB['GoldStatistic'][realm] and _G.ANDROMEDA_ADB['GoldStatistic'][realm][name]) then
         _G.StaticPopup_Show('ANDROMEDA_DELETE_UNIT_PROFILE', text, GUI:GetClassFromGoldInfo(name, realm))
     else
         _G.UIErrorsFrame:AddMessage(C.RED_COLOR .. L['Invalid character name.'])
@@ -237,12 +216,7 @@ function GUI:CreateProfileFrame(parent)
     reset:SetScript('OnClick', function()
         _G.StaticPopup_Show('ANDROMEDA_RESET_ALL')
     end)
-    F.AddTooltip(
-        reset,
-        'ANCHOR_TOP',
-        F:StyleAddonName(L['Delete %AddonName% all settings, reset to the default.']),
-        'RED'
-    )
+    F.AddTooltip(reset, 'ANCHOR_TOP', F:StyleAddonName(L['Delete %AddonName% all settings, reset to the default.']), 'RED')
 
     local import = F.CreateButton(parent, 100, 24, L['Import'])
     import:SetPoint('BOTTOMLEFT', 20, 20)

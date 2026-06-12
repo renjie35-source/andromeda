@@ -14,7 +14,11 @@ local function SetTextColorHook(text)
                 r = 216 / 255
                 g = 197 / 255
                 b = 136 / 255
-            elseif r == _G.OBJECTIVE_TRACKER_COLOR['HeaderHighlight'].r and g == _G.OBJECTIVE_TRACKER_COLOR['HeaderHighlight'].g and b == _G.OBJECTIVE_TRACKER_COLOR['HeaderHighlight'].b then
+            elseif
+                r == _G.OBJECTIVE_TRACKER_COLOR['HeaderHighlight'].r
+                and g == _G.OBJECTIVE_TRACKER_COLOR['HeaderHighlight'].g
+                and b == _G.OBJECTIVE_TRACKER_COLOR['HeaderHighlight'].b
+            then
                 r = 216 / 255
                 g = 181 / 255
                 b = 136 / 255

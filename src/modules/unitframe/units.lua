@@ -176,8 +176,6 @@ function UNITFRAME:CreateAndUpdatePartyHeader()
 end
 
 function UNITFRAME:SpawnParty()
-
-
     oUF:RegisterStyle('Party', CreatePartyStyle)
     oUF:SetActiveStyle('Party')
 
@@ -551,7 +549,7 @@ end
 local function UpdatePosBySpec(event, ...)
     local unit, _, spellID = ...
     if (event == 'UNIT_SPELLCAST_SUCCEEDED' and unit == 'player' and spellID == 200749) or event == 'ON_LOGIN' then
-        local specIndex = GetSpecialization()
+        local specIndex = C_SpecializationInfo.GetSpecialization()
         if not specIndex then
             return
         end
@@ -588,7 +586,7 @@ function UNITFRAME:SetGroupFramePos()
 
     if UNITFRAME.RaidMover then
         local function updateRaidMover()
-            local specIndex = GetSpecialization()
+            local specIndex = C_SpecializationInfo.GetSpecialization()
             if not specIndex then
                 return
             end
@@ -600,7 +598,7 @@ function UNITFRAME:SetGroupFramePos()
 
     if UNITFRAME.PartyMover then
         local function updatePartyMover()
-            local specIndex = GetSpecialization()
+            local specIndex = C_SpecializationInfo.GetSpecialization()
             if not specIndex then
                 return
             end

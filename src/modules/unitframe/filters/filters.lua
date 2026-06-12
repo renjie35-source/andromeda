@@ -40,7 +40,11 @@ end
 function UNITFRAME:InitRaidDebuffsList()
     for instName, value in pairs(raidDebuffsList) do
         for spell, priority in pairs(value) do
-            if _G.ANDROMEDA_ADB['RaidDebuffsList'][instName] and _G.ANDROMEDA_ADB['RaidDebuffsList'][instName][spell] and _G.ANDROMEDA_ADB['RaidDebuffsList'][instName][spell] == priority then
+            if
+                _G.ANDROMEDA_ADB['RaidDebuffsList'][instName]
+                and _G.ANDROMEDA_ADB['RaidDebuffsList'][instName][spell]
+                and _G.ANDROMEDA_ADB['RaidDebuffsList'][instName][spell] == priority
+            then
                 _G.ANDROMEDA_ADB['RaidDebuffsList'][instName][spell] = nil
             end
         end
@@ -66,7 +70,7 @@ function UNITFRAME:InitCornerSpellsList()
     end
 
     for spellID in pairs(data) do
-        local name = GetSpellInfo(spellID)
+        local name = F.GetSpellInfo(spellID)
         if not name then
             F:Debug('CheckCornerSpells: Invalid Spell ID ' .. spellID)
         end
@@ -81,7 +85,7 @@ end
 
 function UNITFRAME:InitPartySpellsList()
     for spellID, duration in pairs(C.PartySpellsList) do
-        local name = GetSpellInfo(spellID)
+        local name = F.GetSpellInfo(spellID)
         if name then
             local modDuration = _G.ANDROMEDA_ADB['PartySpellsList'][spellID]
             if modDuration and modDuration == duration then
@@ -95,7 +99,7 @@ end
 
 function NAMEPLATE:InitMajorSpellsList()
     for spellID in pairs(C.MajorSpellsList) do
-        local name = GetSpellInfo(spellID)
+        local name = F.GetSpellInfo(spellID)
         if name then
             if _G.ANDROMEDA_ADB['MajorSpellsList'][spellID] then
                 _G.ANDROMEDA_ADB['MajorSpellsList'][spellID] = nil

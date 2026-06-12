@@ -70,7 +70,6 @@ C.CharacterSettings = {
         CombatAlertScale = 0.4,
         CombatAlertSpeed = 1,
 
-
         Interrupt = true,
         Dispel = true,
         Steal = true,
@@ -256,7 +255,6 @@ C.CharacterSettings = {
         FocusTargetPowerHeight = 1,
         FocusTargetAuraPerRow = 0,
 
-
         ShowRaidDebuff = true,
         RaidDebuffSize = 14,
         RaidDebuffScale = 1,
@@ -266,7 +264,6 @@ C.CharacterSettings = {
         RaidBuffScale = 1,
         RaidBuffAuto = false,
 
-
         CornerSpell = true,
         CornerSpellType = 1,
         CornerSpellScale = 1,
@@ -275,9 +272,6 @@ C.CharacterSettings = {
         DebuffWatcherDispellType = 1,
         DebuffWatcherScale = 1,
         DebuffWatcherClickThru = true,
-
-
-
 
         SimpleMode = false,
         SMRScale = 10,
@@ -299,7 +293,6 @@ C.CharacterSettings = {
         PartyWatcherOnRight = false,
         PartyWatcherSize = 26,
 
-
         RaidFrame = true,
         RaidHealthColorStyle = 4,
         TeamIndex = false,
@@ -311,7 +304,6 @@ C.CharacterSettings = {
         RaidPowerHeight = 2,
         RaidNameLength = 2,
 
-
         RaidTargetIndicator = true,
         ThreatIndicator = true,
         GroupName = false,
@@ -319,7 +311,6 @@ C.CharacterSettings = {
         GroupLeader = true,
         SmartRaid = true,
         PositionBySpec = false,
-
 
         Boss = true,
         BossWidth = 100,
@@ -396,7 +387,6 @@ C.CharacterSettings = {
         DesaturateIcon = true,
         DebuffTypeColor = true,
         DispellMode = 2,
-
 
         TotemIcon = true,
 
@@ -687,9 +677,6 @@ C.AccountSettings = {
     CustomJunkList = {},
     -- NameplateAuraFilterList = { [1] = {}, [2] = {} },
 
-
-
-
     NameplateAuraWhiteList = {},
     NameplateAuraBlackList = {},
 
@@ -711,9 +698,9 @@ C.AccountSettings = {
     ProfileNames = {},
     UseCustomClassColor = true,
     CustomClassColors = {
-        HUNTER = { r = 0, g = 0.65, b = 0.21},
+        HUNTER = { r = 0, g = 0.65, b = 0.21 },
         WARRIOR = { r = 0.6, g = 0.53, b = 0.46 },
-        SHAMAN = { r = 0.26, g = 0.37, b = 0.85, },
+        SHAMAN = { r = 0.26, g = 0.37, b = 0.85 },
         MAGE = { r = 0.2, g = 0.59, b = 0.86 },
         PRIEST = { r = 0.82, g = 0.85, b = 0.89 },
         DEATHKNIGHT = { r = 0.72, g = 0.08, b = 0.25 },

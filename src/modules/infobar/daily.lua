@@ -42,7 +42,7 @@ local questlist = {
     { name = L['Timewarped Badge Reward'], id = 45799, texture = 1530590 }, -- MoP
     { name = L['Timewarped Badge Reward'], id = 55499, texture = 1129683 }, -- WoD
     { name = L['Timewarped Badge Reward'], id = 64710, texture = 1467047 }, -- Legion
-    { name = GetSpellInfo(388945), id = 70866 }, -- SoDK
+    { name = F.GetSpellInfo(388945), id = 70866 }, -- SoDK
     { name = '', id = 70906, itemID = 200468 }, -- Grand hunt
     { name = '', id = 70893, itemID = 200095 }, -- Community feast
 }
@@ -214,7 +214,7 @@ local itemCache = {}
 local function getItemLink(itemID)
     local link = itemCache[itemID]
     if not link then
-        link = select(2, GetItemInfo(itemID))
+        link = select(2, C_Item.GetItemInfo(itemID))
         itemCache[itemID] = link
     end
     return link
@@ -232,7 +232,7 @@ end
 local function onMouseUp(_, btn)
     if btn == 'RightButton' then
         if not _G.WeeklyRewardsFrame then
-            LoadAddOn('Blizzard_WeeklyRewards')
+            C_AddOns.LoadAddOn('Blizzard_WeeklyRewards')
         end
         if InCombatLockdown() then
             F:TogglePanel(_G.WeeklyRewardsFrame)
@@ -250,7 +250,7 @@ local function onShiftDown(self)
     end
 end
 
-local communityFeastStr = GetSpellInfo(388961)
+local communityFeastStr = F.GetSpellInfo(388961)
 local function onEnter(self)
     self.entered = true
 

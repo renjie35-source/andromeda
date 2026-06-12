@@ -130,8 +130,8 @@ local function createSpellBarWidget(parent, texture)
 end
 
 local function createSpellBar(parent, spellID, barTable, tableName, isNew)
-    local spellName = GetSpellInfo(spellID)
-    local texture = GetSpellTexture(spellID)
+    local spellName = F.GetSpellInfo(spellID)
+    local texture = F.GetSpellTexture(spellID)
 
     local bar = CreateFrame('Frame', nil, parent.child, 'BackdropTemplate')
     bar:SetSize(200, 28)
@@ -179,7 +179,7 @@ local function addButton_OnClick(self)
     local tableName = parent.tableName
     local spellID = tonumber(parent.editBox:GetText())
 
-    if not spellID or not GetSpellInfo(spellID) then
+    if not spellID or not F.GetSpellInfo(spellID) then
         _G.UIErrorsFrame:AddMessage(C.RED_COLOR .. L['Incorrect SpellID'])
         return
     end
@@ -934,7 +934,7 @@ function GUI:SetupNameplateAuraFilter(parent)
     }
 
     local function createBar(parent, index, spellID)
-        local name, _, texture = GetSpellInfo(spellID)
+        local name, _, texture = F.GetSpellInfo(spellID)
         local bar = CreateFrame('Frame', nil, parent, 'BackdropTemplate')
         bar:SetSize(200, 28)
         bar.bg = F.CreateBD(bar, 0.25)
@@ -984,7 +984,7 @@ function GUI:SetupNameplateAuraFilter(parent)
 
     local function addClick(parent, index)
         local spellID = tonumber(parent.box:GetText())
-        if not spellID or not GetSpellInfo(spellID) then
+        if not spellID or not F.GetSpellInfo(spellID) then
             _G.UIErrorsFrame:AddMessage(C.RED_COLOR .. L['Incorrect SpellID'])
             return
         end
@@ -1424,8 +1424,8 @@ function GUI:SetupNameplateColorByDot(parent)
     local barTable = {}
 
     local function createBar(parent, spellID, isNew)
-        local spellName = GetSpellInfo(spellID)
-        local texture = GetSpellTexture(spellID)
+        local spellName = F.GetSpellInfo(spellID)
+        local texture = F.GetSpellTexture(spellID)
 
         local bar = CreateFrame('Frame', nil, parent, 'BackdropTemplate')
         bar:SetSize(200, 28)
@@ -1469,7 +1469,7 @@ function GUI:SetupNameplateColorByDot(parent)
         local parent = button.__owner
         local spellID = tonumber(parent.box:GetText())
 
-        if not spellID or not GetSpellInfo(spellID) then
+        if not spellID or not F.GetSpellInfo(spellID) then
             _G.UIErrorsFrame:AddMessage(C.RED_COLOR .. L['Incorrect SpellID'])
             return
         end
@@ -2347,13 +2347,13 @@ do
         panel.barTable = {}
         panel.tableName = 'PartySpellsList'
 
-        local ARCANE_TORRENT = GetSpellInfo(25046)
+        local ARCANE_TORRENT = F.GetSpellInfo(25046)
         local function createBar(parent, spellID, duration)
-            local spellName = GetSpellInfo(spellID)
+            local spellName = F.GetSpellInfo(spellID)
             if spellName == ARCANE_TORRENT then
                 return
             end
-            local texture = GetSpellTexture(spellID)
+            local texture = F.GetSpellTexture(spellID)
 
             local bar = CreateFrame('Frame', nil, parent, 'BackdropTemplate')
             bar:SetSize(200, 30)
@@ -2389,8 +2389,15 @@ do
 
         local options = {}
         options[1] = createEditbox(panel.bg, nil, 10, -10, L['Fill in SpellID, must be a number.|nSpell name is not supported.'], 60, 24)
-        options[2] =
-            createEditbox(panel.bg, nil, 76, -10, L["Enter the spell's cooldown duration.|nParty watcher only support regular spells and abilities.|nFor spells like 'Aspect of the Wild' (BM Hunter), you need to sync cooldown with your party members."], 60, 24)
+        options[2] = createEditbox(
+            panel.bg,
+            nil,
+            76,
+            -10,
+            L["Enter the spell's cooldown duration.|nParty watcher only support regular spells and abilities.|nFor spells like 'Aspect of the Wild' (BM Hunter), you need to sync cooldown with your party members."],
+            60,
+            24
+        )
 
         local scrollArea = createScrollFrame(panel.bg, 200, 485)
         panel.scrollArea = scrollArea
@@ -2402,7 +2409,7 @@ do
                 return
             end
 
-            if not GetSpellInfo(spellID) then
+            if not F.GetSpellInfo(spellID) then
                 _G.UIErrorsFrame:AddMessage(C.RED_COLOR .. L['Incorrect SpellID'])
                 return
             end
@@ -2486,7 +2493,16 @@ do
         local frame = panel.bg
         local bars, options = {}, {}
 
-        local iType = createDropdown(frame, L['Instance Type'], 10, -30, { _G.DUNGEONS, _G.RAID, _G.OTHER }, L['Select the type of instance.|nThe list of debuffs is saved separately for each instance.'], 107, 24)
+        local iType = createDropdown(
+            frame,
+            L['Instance Type'],
+            10,
+            -30,
+            { _G.DUNGEONS, _G.RAID, _G.OTHER },
+            L['Select the type of instance.|nThe list of debuffs is saved separately for each instance.'],
+            107,
+            24
+        )
         iType.title = L['Hint']
         for i = 1, 3 do
             iType.options[i]:HookScript('OnClick', function()
@@ -2553,7 +2569,7 @@ do
                 return
             end
 
-            if spellID and not GetSpellInfo(spellID) then
+            if spellID and not F.GetSpellInfo(spellID) then
                 _G.UIErrorsFrame:AddMessage(C.RED_COLOR .. L['Incorrect SpellID'])
                 return
             end
@@ -2662,7 +2678,7 @@ do
         end
 
         local function applyData(index, instName, spellID, priority)
-            local name, _, texture = GetSpellInfo(spellID)
+            local name, _, texture = F.GetSpellInfo(spellID)
             if not bars[index] then
                 bars[index] = createBar(index, texture)
             end
@@ -2767,13 +2783,18 @@ do
         }
 
         local anchors = {
-            'TL', 'T', 'TR',
-            'L', 'R',
-            'BL', 'B', 'BR',
+            'TL',
+            'T',
+            'TR',
+            'L',
+            'R',
+            'BL',
+            'B',
+            'BR',
         }
 
         local function createBar(parent, spellID, anchor, r, g, b, showAll)
-            local name, _, texture = GetSpellInfo(spellID)
+            local name, _, texture = F.GetSpellInfo(spellID)
             local bar = CreateFrame('Frame', nil, parent, 'BackdropTemplate')
             bar:SetSize(200, 28)
             F.CreateBD(bar, 0.25)
@@ -2812,7 +2833,7 @@ do
         local function addClick(parent)
             local spellID = tonumber(panel.editBox:GetText())
 
-            if not spellID or not GetSpellInfo(spellID) then
+            if not spellID or not F.GetSpellInfo(spellID) then
                 _G.UIErrorsFrame:AddMessage(C.RED_COLOR .. L['Incorrect SpellID'])
                 return
             end
@@ -2881,11 +2902,6 @@ do
         rstBtn:SetScript('OnClick', function()
             StaticPopup_Show('ANDROMEDA_RESET_CORNER_SPELLS')
         end)
-
-
-
-
-
 
         for spellID, value in pairs(UNITFRAME.CornerSpellsList) do
             local r, g, b = unpack(value[2])
@@ -3089,8 +3105,6 @@ function GUI:SetupVignettingVisibility(parent)
 end
 
 -- Chat
-
-
 
 -- Combat
 function GUI:SetupSimpleFloatingCombatText(parent)

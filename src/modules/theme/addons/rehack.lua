@@ -10,7 +10,7 @@ function THEME:ReskinREHack()
         return
     end
 
-    if not IsAddOnLoaded('REHack') then
+    if not C_AddOns.IsAddOnLoaded('REHack') then
         return
     end
 

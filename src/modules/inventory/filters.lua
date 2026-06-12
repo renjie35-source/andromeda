@@ -245,7 +245,7 @@ local relicSpellIDs = {
 }
 
 local function isKorthiaRelicByID(itemID)
-    local _, spellID = GetItemSpell(itemID)
+    local _, spellID = C_Item.GetItemSpell(itemID)
     return spellID and relicSpellIDs[spellID]
 end
 

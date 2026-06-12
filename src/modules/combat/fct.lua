@@ -7,16 +7,8 @@
 local F, C, L = unpack(select(2, ...))
 local COMBAT = F:GetModule('Combat')
 
-local mask_mine_friendly_player = _G.bit.bor(
-    _G.COMBATLOG_OBJECT_AFFILIATION_MASK,
-    _G.COMBATLOG_OBJECT_REACTION_MASK,
-    _G.COMBATLOG_OBJECT_CONTROL_MASK
-)
-local flag_mine_friendly_player = _G.bit.bor(
-    _G.COMBATLOG_OBJECT_AFFILIATION_MINE,
-    _G.COMBATLOG_OBJECT_REACTION_FRIENDLY,
-    _G.COMBATLOG_OBJECT_CONTROL_PLAYER
-)
+local mask_mine_friendly_player = _G.bit.bor(_G.COMBATLOG_OBJECT_AFFILIATION_MASK, _G.COMBATLOG_OBJECT_REACTION_MASK, _G.COMBATLOG_OBJECT_CONTROL_MASK)
+local flag_mine_friendly_player = _G.bit.bor(_G.COMBATLOG_OBJECT_AFFILIATION_MINE, _G.COMBATLOG_OBJECT_REACTION_FRIENDLY, _G.COMBATLOG_OBJECT_CONTROL_PLAYER)
 
 local eventFrame = CreateFrame('Frame')
 
@@ -105,7 +97,7 @@ local function dmgString(isIn, isHealing, spellID, amount, school, isCritical, H
             frame:AddMessage(
                 format(
                     isCritical and '|T%s:0:0:0:-5|t |cff%s%s*%s* x%d|r' or '|T%s:0:0:0:-5|t |cff%s%s%s x%d|r',
-                    GetSpellTexture(spellID) or '',
+                    F.GetSpellTexture(spellID) or '',
                     dmgcolor[school],
                     symbol,
                     F:Numb(amount / Hits),
@@ -116,7 +108,7 @@ local function dmgString(isIn, isHealing, spellID, amount, school, isCritical, H
             frame:AddMessage(
                 format(
                     isCritical and '|T%s:0:0:0:-5|t |cff%s%s*%s*|r' or '|T%s:0:0:0:-5|t |cff%s%s%s|r',
-                    GetSpellTexture(spellID) or '',
+                    F.GetSpellTexture(spellID) or '',
                     dmgcolor[school],
                     symbol,
                     F:Numb(amount)
@@ -132,7 +124,7 @@ local function dmgString(isIn, isHealing, spellID, amount, school, isCritical, H
                     symbol,
                     F:Numb(amount / Hits),
                     Hits,
-                    GetSpellTexture(spellID) or ''
+                    F.GetSpellTexture(spellID) or ''
                 )
             )
         else
@@ -142,7 +134,7 @@ local function dmgString(isIn, isHealing, spellID, amount, school, isCritical, H
                     dmgcolor[school],
                     symbol,
                     F:Numb(amount),
-                    GetSpellTexture(spellID) or ''
+                    F.GetSpellTexture(spellID) or ''
                 )
             )
         end
@@ -154,29 +146,15 @@ local function missString(isIn, spellID, missType, amountMissed)
 
     if isIn then
         if missType == 'ABSORB' then
-            frame:AddMessage(
-                format(
-                    '|T%s:0:0:0:-5|t %s(%s)',
-                    GetSpellTexture(spellID) or '',
-                    _G[missType],
-                    F:Numb(amountMissed)
-                )
-            )
+            frame:AddMessage(format('|T%s:0:0:0:-5|t %s(%s)', F.GetSpellTexture(spellID) or '', _G[missType], F:Numb(amountMissed)))
         else
-            frame:AddMessage(format('|T%s:0:0:0:-5|t %s', GetSpellTexture(spellID) or '', _G[missType]))
+            frame:AddMessage(format('|T%s:0:0:0:-5|t %s', F.GetSpellTexture(spellID) or '', _G[missType]))
         end
     else
         if missType == 'ABSORB' then
-            frame:AddMessage(
-                format(
-                    '%s(%s) |T%s:0:0:0:-5|t',
-                    _G[missType],
-                    F:Numb(amountMissed),
-                    GetSpellTexture(spellID) or ''
-                )
-            )
+            frame:AddMessage(format('%s(%s) |T%s:0:0:0:-5|t', _G[missType], F:Numb(amountMissed), F.GetSpellTexture(spellID) or ''))
         else
-            frame:AddMessage(format('%s |T%s:0:0:0:-5|t', _G[missType], GetSpellTexture(spellID) or ''))
+            frame:AddMessage(format('%s |T%s:0:0:0:-5|t', _G[missType], F.GetSpellTexture(spellID) or ''))
         end
     end
 end
@@ -217,38 +195,21 @@ function COMBAT:FloatingCombatText()
     end
 
     if C.DB.Combat.Incoming then
-        F.Mover(
-            inFrame,
-            L['FCTInFrame'],
-            'FCTInFrame',
-            { 'RIGHT', _G.UIParent, 'CENTER', -500, 0 },
-            inFrame:GetWidth(),
-            inFrame:GetHeight()
-        )
+        F.Mover(inFrame, L['FCTInFrame'], 'FCTInFrame', { 'RIGHT', _G.UIParent, 'CENTER', -500, 0 }, inFrame:GetWidth(), inFrame:GetHeight())
     end
 
     if C.DB.Combat.Outgoing then
-        F.Mover(
-            outFrame,
-            L['FCTOutFrame'],
-            'FCTOutFrame',
-            { 'LEFT', _G.UIParent, 'CENTER', 300, 140 },
-            outFrame:GetWidth(),
-            outFrame:GetHeight()
-        )
+        F.Mover(outFrame, L['FCTOutFrame'], 'FCTOutFrame', { 'LEFT', _G.UIParent, 'CENTER', 300, 140 }, outFrame:GetWidth(), outFrame:GetHeight())
     end
 
     setMerge()
 
     eventFrame:SetScript('OnEvent', function(self)
-        local _, Event, _, sourceGUID, _, sourceFlags, _, destGUID, _, _, _, arg1, arg2, arg3, arg4, arg5, arg6, arg7, _, _, arg10 =
-            CombatLogGetCurrentEventInfo()
+        local _, Event, _, sourceGUID, _, sourceFlags, _, destGUID, _, _, _, arg1, arg2, arg3, arg4, arg5, arg6, arg7, _, _, arg10 = CombatLogGetCurrentEventInfo()
         local vehicleGUID, playerGUID = self.vehicleGUID, self.playerGUID
         local fromMe = sourceGUID == playerGUID
-        local fromPet = _G.bit.band(sourceFlags, mask_mine_friendly_player) == flag_mine_friendly_player
-            and _G.bit.band(sourceFlags, _G.COMBATLOG_OBJECT_TYPE_PET) > 0
-        local fromGuardian = _G.bit.band(sourceFlags, mask_mine_friendly_player) == flag_mine_friendly_player
-            and _G.bit.band(sourceFlags, _G.COMBATLOG_OBJECT_TYPE_GUARDIAN) > 0
+        local fromPet = _G.bit.band(sourceFlags, mask_mine_friendly_player) == flag_mine_friendly_player and _G.bit.band(sourceFlags, _G.COMBATLOG_OBJECT_TYPE_PET) > 0
+        local fromGuardian = _G.bit.band(sourceFlags, mask_mine_friendly_player) == flag_mine_friendly_player and _G.bit.band(sourceFlags, _G.COMBATLOG_OBJECT_TYPE_GUARDIAN) > 0
         local fromMine = fromMe or (C.DB.Combat.Pet and (fromPet or fromGuardian)) or sourceGUID == vehicleGUID
 
         local toMe = destGUID == playerGUID or destGUID == vehicleGUID
@@ -260,10 +221,7 @@ function COMBAT:FloatingCombatText()
             if toMe then
                 dmgFunc(true, false, 5586, arg1, arg3, arg7)
             end
-        elseif
-            (Event == 'SPELL_DAMAGE' or Event == 'RANGE_DAMAGE')
-            or (C.DB.Combat.Periodic and Event == 'SPELL_PERIODIC_DAMAGE')
-        then
+        elseif (Event == 'SPELL_DAMAGE' or Event == 'RANGE_DAMAGE') or (C.DB.Combat.Periodic and Event == 'SPELL_PERIODIC_DAMAGE') then
             if blacklist[arg1] then
                 return
             end
@@ -303,9 +261,7 @@ function COMBAT:FloatingCombatText()
             end
         elseif Event == 'ENVIRONMENTAL_DAMAGE' then
             if toMe then
-                inFrame:AddMessage(
-                    format('|cff%s%s -%s|r', dmgcolor[arg4], environmentalTypeText[arg1], F:Numb(arg2))
-                )
+                inFrame:AddMessage(format('|cff%s%s -%s|r', dmgcolor[arg4], environmentalTypeText[arg1], F:Numb(arg2)))
             end
         end
     end)

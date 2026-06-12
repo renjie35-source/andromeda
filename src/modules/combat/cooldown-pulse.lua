@@ -61,7 +61,7 @@ local function getPetActionIndexByName(name)
 end
 
 local function trackItemSpell(itemID)
-    local _, spellID = GetItemSpell(itemID)
+    local _, spellID = C_Item.GetItemSpell(itemID)
     if spellID then
         itemSpells[spellID] = itemID
         return true
@@ -88,10 +88,10 @@ local function onUpdate(_, update)
                 local getCooldownDetails
                 if v[2] == 'spell' then
                     getCooldownDetails = memoize(function()
-                        local start, duration, enabled = GetSpellCooldown(v[3])
+                        local start, duration, enabled = F.GetSpellCooldown(v[3])
                         return {
-                            name = GetSpellInfo(v[3]),
-                            texture = GetSpellTexture(v[3]),
+                            name = F.GetSpellInfo(v[3]),
+                            texture = F.GetSpellTexture(v[3]),
                             start = start,
                             duration = duration,
                             enabled = enabled,
@@ -101,7 +101,7 @@ local function onUpdate(_, update)
                     getCooldownDetails = memoize(function()
                         local start, duration, enabled = C_Container.GetItemCooldown(i)
                         return {
-                            name = GetItemInfo(i),
+                            name = C_Item.GetItemInfo(i),
                             texture = v[3],
                             start = start,
                             duration = duration,
@@ -146,7 +146,7 @@ local function onUpdate(_, update)
                 local remaining = cooldown.duration - (GetTime() - cooldown.start)
                 if remaining <= 0 then
                     if not isAnimatingCooldownByName(cooldown.name) then
-                        tinsert(animating, {cooldown.texture,cooldown.isPet,cooldown.name})
+                        tinsert(animating, { cooldown.texture, cooldown.isPet, cooldown.name })
                     end
 
                     cooldowns[i] = nil
@@ -210,7 +210,7 @@ function FRAME:UNIT_SPELLCAST_SUCCEEDED(unit, _, spellID)
     if unit == 'player' then
         local itemID = itemSpells[spellID]
         if itemID then
-            local texture = select(10, GetItemInfo(itemID))
+            local texture = select(10, C_Item.GetItemInfo(itemID))
             watching[itemID] = { GetTime(), 'item', texture }
             itemSpells[spellID] = nil
         else
@@ -230,7 +230,7 @@ function FRAME:COMBAT_LOG_EVENT_UNFILTERED()
 
     if eventType == 'SPELL_CAST_SUCCESS' then
         if isPet and isMine then
-            local name = GetSpellInfo(spellID)
+            local name = F.GetSpellInfo(spellID)
             local index = getPetActionIndexByName(name)
             if index and not select(6, GetPetActionInfo(index)) then
                 watching[spellID] = { GetTime(), 'pet', index }
@@ -304,13 +304,13 @@ function CDP:OnLogin()
     hooksecurefunc(C_Container, 'UseContainerItem', function(bag, slot)
         local itemID = C_Container.GetContainerItemID(bag, slot)
         if itemID and not trackItemSpell(itemID) then
-            local texture = select(10, GetItemInfo(itemID))
+            local texture = select(10, C_Item.GetItemInfo(itemID))
             watching[itemID] = { GetTime(), 'item', texture }
         end
     end)
 end
 
 F:RegisterSlashCommand('/cdpulse', function()
-    tinsert(animating, { GetSpellTexture(87214) })
+    tinsert(animating, { F.GetSpellTexture(87214) })
     FRAME:SetScript('OnUpdate', onUpdate)
 end)

@@ -94,12 +94,12 @@ end
 do
     -- Update my role
     local function CheckMyRole()
-        local tree = GetSpecialization()
+        local tree = C_SpecializationInfo.GetSpecialization()
         if not tree then
             return
         end
 
-        local _, _, _, _, role, primaryStat = GetSpecializationInfo(tree)
+        local _, _, _, _, role, primaryStat = C_SpecializationInfo.GetSpecializationInfo(tree)
         if role == 'TANK' then
             C.MyRole = 'Tank'
         elseif role == 'HEALER' then

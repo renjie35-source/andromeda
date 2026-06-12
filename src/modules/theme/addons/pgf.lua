@@ -6,7 +6,7 @@ function THEME:ReskinPGF()
         return
     end
 
-    if not IsAddOnLoaded('PremadeGroupsFilter') then
+    if not C_AddOns.IsAddOnLoaded('PremadeGroupsFilter') then
         return
     end
 

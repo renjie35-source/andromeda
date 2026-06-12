@@ -105,8 +105,8 @@ function ACTIONBAR:Bind_Create()
         button:HookScript('OnEnter', hookSpellButton)
     end
 
-    if not IsAddOnLoaded('Blizzard_MacroUI') then
-        hooksecurefunc('LoadAddOn', ACTIONBAR.Bind_RegisterMacro)
+    if not C_AddOns.IsAddOnLoaded('Blizzard_MacroUI') then
+        hooksecurefunc(C_AddOns, 'LoadAddOn', ACTIONBAR.Bind_RegisterMacro)
     else
         ACTIONBAR.Bind_RegisterMacro('Blizzard_MacroUI')
     end
@@ -283,7 +283,10 @@ function ACTIONBAR:Bind_CreateDialog()
     local font = C.Assets.Fonts.Bold
     F.CreateFS(frame, font, 14, outline or nil, _G.QUICK_KEYBIND_MODE, false, outline and 'NONE' or 'THICK', 'TOP', 0, -10)
 
-    local helpInfo = F.CreateHelpInfo(frame, '|n' .. _G.QUICK_KEYBIND_DESCRIPTION .. '|n|n' .. L['You can even keybind your spellbook spells or macros without placing them to your actionbars.'])
+    local helpInfo = F.CreateHelpInfo(
+        frame,
+        '|n' .. _G.QUICK_KEYBIND_DESCRIPTION .. '|n|n' .. L['You can even keybind your spellbook spells or macros without placing them to your actionbars.']
+    )
     helpInfo:SetPoint('TOPRIGHT', 2, -2)
 
     local text = F.CreateFS(frame, font, 12, outline or nil, _G.CHARACTER_SPECIFIC_KEYBINDINGS, 'YELLOW', outline and 'NONE' or 'THICK', 'TOP', 0, -40)

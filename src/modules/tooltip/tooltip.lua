@@ -349,7 +349,7 @@ function TOOLTIP:SetUnitAura(unit, index, filter)
     if not self or not CanAccessObject(self) then
         return
     end
-    local _, _, _, _, _, _, _, _, _, id = UnitAura(unit, index, filter)
+    local _, _, _, _, _, _, _, _, _, id = F.UnitAura(unit, index, filter)
 
     if id then
         local mountText

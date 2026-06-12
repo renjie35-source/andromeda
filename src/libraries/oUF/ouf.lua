@@ -1,6 +1,5 @@
 local parent, ns = ...
-local getAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata -- isPatch10_1
-local global = getAddOnMetadata(parent, 'X-oUF')
+local global = C_AddOns.GetAddOnMetadata(parent, 'X-oUF')
 local _VERSION = '@project-version@'
 if(_VERSION:find('project%-version')) then
 	_VERSION = 'devel'
