@@ -327,17 +327,6 @@ do
     end
 end
 
--- Unregister talent event
-do
-    if _G.PlayerTalentFrame then
-        _G.PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
-    else
-        hooksecurefunc('TalentFrame_LoadUI', function()
-            _G.PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
-        end)
-    end
-end
-
 -- Fix achievement date missing in zhTW
 do
     if GetLocale() == 'zhTW' then

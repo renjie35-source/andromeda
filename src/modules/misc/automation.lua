@@ -1,19 +1,6 @@
 local F, C, L = unpack(select(2, ...))
 local AUTO = F:GetModule('Automation')
 
--- automatically select the talent tab
-do
-    local function selectTalentTab()
-        if not InCombatLockdown() then
-            PlayerTalentTab_OnClick(_G['PlayerTalentFrameTab' .. _G.TALENTS_TAB])
-        end
-    end
-
-    F:HookAddOn('Blizzard_TalentUI', function()
-        hooksecurefunc('PlayerTalentFrame_Toggle', selectTalentTab)
-    end)
-end
-
 -- automatically place keystones in the font of power
 do
     local function autoKeystone()
