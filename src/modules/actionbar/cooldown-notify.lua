@@ -21,8 +21,8 @@ end
 
 local lastCDSend = 0
 function ACTIONBAR:SendCurrentSpell(thisTime, spellID)
-    local spellLink = GetSpellLink(spellID)
-    local charges, maxCharges, chargeStart, chargeDuration = GetSpellCharges(spellID)
+    local spellLink = F.GetSpellLink(spellID)
+    local charges, maxCharges, chargeStart, chargeDuration = F.GetSpellCharges(spellID)
     if charges and maxCharges then
         if charges ~= maxCharges then
             local remain = chargeStart + chargeDuration - thisTime

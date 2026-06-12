@@ -202,7 +202,7 @@ function BR:Reminder_Update(cfg)
             end
         else
             for i = 1, 32 do
-                local name, _, _, _, _, _, _, _, _, spellID = UnitBuff('player', i)
+                local name, _, _, _, _, _, _, _, _, spellID = F.UnitAura('player', i, 'HELPFUL')
                 if not name then
                     break
                 end

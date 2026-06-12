@@ -83,6 +83,19 @@ do
         return C_Spell.GetSpellTexture(spellID)
     end
 
+    function F.GetSpellLink(spellID)
+        return C_Spell.GetSpellLink(spellID)
+    end
+
+    function F.GetSpellCharges(spellID)
+        local info = C_Spell.GetSpellCharges(spellID)
+        if not info then
+            return
+        end
+
+        return info.currentCharges, info.maxCharges, info.cooldownStartTime, info.cooldownDuration, info.chargeModRate
+    end
+
     function F.GetSpellCooldown(spellID)
         local info = C_Spell.GetSpellCooldown(spellID)
         if not info then

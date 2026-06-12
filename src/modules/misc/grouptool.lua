@@ -174,7 +174,7 @@ end
 function GT:RaidTool_UpdateRes(elapsed)
     self.elapsed = (self.elapsed or 0) + elapsed
     if self.elapsed > 0.1 then
-        local charges, _, started, duration = GetSpellCharges(20484)
+        local charges, _, started, duration = F.GetSpellCharges(20484)
         if charges then
             local timer = duration - (GetTime() - started)
             if timer < 0 then
