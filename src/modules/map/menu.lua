@@ -97,12 +97,10 @@ MAP.MenuList = {
         notCheckable = true,
         func = function()
             if not _G.GameMenuFrame:IsShown() then
-                if _G.VideoOptionsFrame:IsShown() then
-                    _G.VideoOptionsFrameCancel:Click()
-                elseif _G.AudioOptionsFrame:IsShown() then
-                    _G.AudioOptionsFrameCancel:Click()
-                elseif _G.InterfaceOptionsFrame:IsShown() then
-                    _G.InterfaceOptionsFrameCancel:Click()
+                -- VideoOptionsFrame/AudioOptionsFrame/InterfaceOptionsFrame were
+                -- removed in 10.0 and unified into SettingsPanel.
+                if _G.SettingsPanel and _G.SettingsPanel:IsShown() then
+                    HideUIPanel(_G.SettingsPanel)
                 end
 
                 CloseMenus()
@@ -112,7 +110,9 @@ MAP.MenuList = {
             else
                 PlaySound(854) --IG_MAINMENU_QUIT
                 HideUIPanel(_G.GameMenuFrame)
-                MainMenuMicroButton_SetNormal()
+                if MainMenuMicroButton_SetNormal then
+                    MainMenuMicroButton_SetNormal()
+                end
             end
         end,
     },
